@@ -1,19 +1,23 @@
 package com.example.mvvm_practice.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.mvvm_practice.game.Game
+import com.example.mvvm_practice.game.Grid
 
 class MainViewModel : ViewModel() {
-    val game: LiveData<Game> = object : LiveData<Game>(Game()){}
 
-    init {
-        Log.i("ViewModel", "MainViewModel created!")
-    }
+    private val game = Game()
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("ViewModel", "MainViewModel destroyed!")
-    }
+    val field: LiveData<Grid> = game.field
+
+    val state: LiveData<GameData.GameState> = game.state
+
+    val xWinsCounter: LiveData<Int> = game.xWinsCounter
+
+    val oWinsCounter: LiveData<Int> = game.oWinsCounter
+
+    fun startGame() = game.restart()
+
+    fun makeMove(index: Int): Boolean = game.makeTurn(index)
 }

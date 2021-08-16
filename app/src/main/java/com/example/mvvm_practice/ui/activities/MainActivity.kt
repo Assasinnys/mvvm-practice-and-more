@@ -1,6 +1,7 @@
 package com.example.mvvm_practice.ui.activities
 
 import GameData.Companion.indexIntoPosition
+import GameData.GameCellState
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -40,31 +41,28 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-            initGrid(cells)
-            viewModel.game.observe(this@MainActivity, { game ->
-                updateGrid(cells, game.getField())
+            initGridButtons(cells)
+            viewModel.field.observe(this@MainActivity, { field ->
+                updateGrid(cells, field)
             })
 
-            startButton.setOnClickListener {
-
-            }
+            viewModel.xWinsCounter.observe(this@MainActivity, { xWinsCounter ->
+                updateWinStates(xWinsCounter)
+            })
 
             restartButton.setOnClickListener {
-
+                viewModel.startGame()
             }
         }
         //TODO implement DIFFERENT GAME TYPES: with friend, with bot. Switching by bottom nav menu
         //TODO implement SAVE GAME using LOCAL database or other local storages
     }
 
-    private fun initGrid(@IdRes cells: Array<Int>) {
+    private fun initGridButtons(@IdRes cells: Array<Int>) {
         cells.forEachIndexed { index, cell ->
             val button = findViewById<AppCompatImageButton>(cell)
             button.setOnClickListener {
-                viewModel.game.value?.let { game ->
-                    game.makeTurn(index)
-                    updateGrid(cells, game.getField())
-                }
+                viewModel.makeMove(index)
             }
         }
     }
@@ -74,16 +72,20 @@ class MainActivity : AppCompatActivity() {
             val (row, column) = indexIntoPosition(index, 3)
             val button = findViewById<AppCompatImageButton>(cell)
             when (field[row][column].state) {
-                GameData.GameCellState.CROSS -> {
+                GameCellState.CROSS -> {
                     button.setImageResource(R.drawable.ic_outline_cross_24)
                 }
-                GameData.GameCellState.CIRCLE -> {
+                GameCellState.CIRCLE -> {
                     button.setImageResource(R.drawable.ic_outline_circle_24)
                 }
-                GameData.GameCellState.EMPTY -> {
+                GameCellState.EMPTY -> {
                     button.setImageResource(android.R.color.transparent)
                 }
             }
         }
+    }
+
+    private fun updateWinStates(xWinsCounter: Int? = null, oWinsCounter: Int? = null) {
+        //TODO
     }
 }
