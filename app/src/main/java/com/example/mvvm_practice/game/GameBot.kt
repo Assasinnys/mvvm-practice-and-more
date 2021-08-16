@@ -20,17 +20,17 @@ class GameBot(
     private var botPlayer: Player
 ) {
     fun makeMove(): Boolean {
-        if (game.getCurrentPlayer() == botPlayer && game.getState() == GameData.GameState.GAME) {
+        if (game.currentPlayer.value == botPlayer && game.state.value == GameData.GameState.GAME) {
             game.makeTurn(getIndexToMoveOrNull() ?: -1)
-            game.getField().print()
+            game.field.value?.print()
             return true
         }
         return false
     }
 
     fun getIndexToMoveOrNull(): Int? {
-        val field = game.getField()
-        val state = game.getState()
+        val field = game.field.value!!
+        val state = game.state.value
         var indexToMove: Int? = null
         //Checking all conditions only if game is play
         if (state == GameData.GameState.GAME) {
@@ -57,10 +57,12 @@ class GameBot(
                         //Check player win
                         indexToMove = getIndexToWinOrNull(switchPlayer(botPlayer)) ?: indexToMove
                         //Check center
-                        if (game.getMode() == GameMode.THREE_TO_THREE) {
+
+                        //if (game.getMode() == GameMode.THREE_TO_THREE) {
                             if (field[1][1].state == GameCellState.EMPTY) indexToMove =
                                 positionIntoIndex(1 to 1, field.size)
-                        }
+                        //}
+
                         //Check bot win
                         indexToMove = getIndexToWinOrNull(botPlayer) ?: indexToMove
                     }
@@ -75,7 +77,7 @@ class GameBot(
     //TODO
 
     private fun closestEmptyMoveIndexOrNull(): Int? {
-        val field = game.getField()
+        val field = game.field.value!!
         for (row in field.indices) {
             for (column in field[row].indices) {
                 if (field[row][column].state == GameCellState.EMPTY) return positionIntoIndex(row to column, field.size)
@@ -85,7 +87,7 @@ class GameBot(
     }
 
     private fun getClosestEmptyCornerOrNull(): Int? {
-        val field = game.getField()
+        val field = game.field.value!!
         if (field[0][0].state == GameCellState.EMPTY) return positionIntoIndex(0 to 0, field.size)
         if (field[0][2].state == GameCellState.EMPTY) return positionIntoIndex(0 to 2, field.size)
         if (field[2][0].state == GameCellState.EMPTY) return positionIntoIndex(2 to 0, field.size)
@@ -94,7 +96,7 @@ class GameBot(
     }
 
     private fun getIndexToPreventPlayerWinOrNull(): Int? {
-        val field = game.getField()
+        val field = game.field.value!!
         val playerCellState: GameCellState = playerToCellState(switchPlayer(botPlayer))
         //Check 8 combinations of player moves after center
         if (field[1][1].state == playerToCellState(botPlayer)) {
@@ -147,10 +149,11 @@ class GameBot(
     // MANY DIAGS CHECK, IF THERE IS MORE THAN 2 DIAGONALS
 
     private fun getIndexToWinOrNull(playerToCheck: Player): Int? {
-        val field = game.getField()
+        val field = game.field.value!!
         val cellStateToCheck: GameCellState = playerToCellState(playerToCheck)
         //Game have 2 modes to check 3x3 and 5x5
-        val winRows = generateWinRows(gameModeToInt(game.getMode()), cellStateToCheck)
+        //TODO REMOVE HARDCORED SHIT
+        val winRows = generateWinRows(gameModeToInt(GameMode.THREE_TO_THREE), cellStateToCheck)
         //Checking rows and columns
         for (rowIndex in field.indices) {
             for (winRowIndex in winRows.indices) {

@@ -32,7 +32,8 @@ class Game(
     private val _oWinsCounter = NotNullMutableLiveData(0)
     val oWinsCounter: LiveData<Int> = _oWinsCounter
 
-    private var currentPlayer: Player = Player.X
+    private val _currentPlayer = NotNullMutableLiveData(Player.X)
+    val currentPlayer: LiveData<Player> = _currentPlayer
 
     init {
         restart()
@@ -41,7 +42,7 @@ class Game(
     fun restart() {
         _field.value = makeEmptyGameField(gameModeToInt(initMode))
         _state.value = GameState.GAME
-        currentPlayer = Player.X
+        _currentPlayer.value = Player.X
     }
 
     fun makeTurn(cellIndex: Int): Boolean {
@@ -51,10 +52,11 @@ class Game(
             return if (_field.value[row][column].state == GameData.GameCellState.EMPTY && state.value == GameState.GAME) {
                 println("onTurn: cellIndex: $cellIndex, currentPlayer: \"${currentPlayer}\"")
                 // Saving move
-                _field.value[row][column].state = playerToCellState(currentPlayer)
+                _field.value[row][column].state = playerToCellState(_currentPlayer.value)
                 // Switching current player
-                currentPlayer = switchPlayer(currentPlayer)
+                _currentPlayer.value = switchPlayer(_currentPlayer.value)
                 updateGameState()
+                _field.value = _field.value
                 true
             } else {
                 println("Cell is not empty or game ended")

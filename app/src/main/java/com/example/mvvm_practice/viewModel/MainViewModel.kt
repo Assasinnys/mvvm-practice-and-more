@@ -13,6 +13,8 @@ class MainViewModel : ViewModel() {
 
     val state: LiveData<GameData.GameState> = game.state
 
+    val currentPlayer: LiveData<GameData.Player> = game.currentPlayer
+
     val xWinsCounter: LiveData<Int> = game.xWinsCounter
 
     val oWinsCounter: LiveData<Int> = game.oWinsCounter

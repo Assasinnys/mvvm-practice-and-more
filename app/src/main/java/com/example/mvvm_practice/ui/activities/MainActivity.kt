@@ -4,10 +4,12 @@ import GameData.Companion.indexIntoPosition
 import GameData.GameCellState
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageButton
 import com.example.mvvm_practice.R
+import com.example.mvvm_practice.TAG
 import com.example.mvvm_practice.viewModel.MainViewModel
 import com.example.mvvm_practice.databinding.MainActivityBinding
 
@@ -47,7 +49,11 @@ class MainActivity : AppCompatActivity() {
             })
 
             viewModel.xWinsCounter.observe(this@MainActivity, { xWinsCounter ->
-                updateWinStates(xWinsCounter)
+                updateWinStates(xWinsCounter = xWinsCounter)
+            })
+
+            viewModel.oWinsCounter.observe(this@MainActivity, { oWinsCounter ->
+                updateWinStates(oWinsCounter = oWinsCounter)
             })
 
             restartButton.setOnClickListener {
@@ -83,9 +89,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        Log.i(TAG, "updateGrid")
     }
 
     private fun updateWinStates(xWinsCounter: Int? = null, oWinsCounter: Int? = null) {
-        //TODO
+        xWinsCounter?.let { counter ->
+            binding.xWinsCounter.text = resources.getString(R.string.x_wins_counter_text, counter)
+        }
+        oWinsCounter?.let { counter ->
+            binding.oWinsCounter.text = resources.getString(R.string.o_wins_counter_text, counter)
+        }
     }
 }
