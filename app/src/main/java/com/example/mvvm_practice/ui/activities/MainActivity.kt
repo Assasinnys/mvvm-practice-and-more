@@ -2,9 +2,11 @@ package com.example.mvvm_practice.ui.activities
 
 import GameData.Companion.indexIntoPosition
 import GameData.GameCellState
+import GameData.GameState
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageButton
@@ -46,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             initGridButtons(cells)
             viewModel.field.observe(this@MainActivity, { field ->
                 updateGrid(cells, field)
+            })
+
+            viewModel.state.observe(this@MainActivity, { state ->
+                stateChangedNotification(state)
             })
 
             viewModel.xWinsCounter.observe(this@MainActivity, { xWinsCounter ->
@@ -92,6 +98,11 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "updateGrid")
     }
 
+    private fun stateChangedNotification(state: GameState) {
+        toast?.cancel()
+        toast = Toast.makeText(this, state.toString(), Toast.LENGTH_SHORT).apply { show() }
+    }
+
     private fun updateWinStates(xWinsCounter: Int? = null, oWinsCounter: Int? = null) {
         xWinsCounter?.let { counter ->
             binding.xWinsCounter.text = resources.getString(R.string.x_wins_counter_text, counter)
@@ -99,5 +110,9 @@ class MainActivity : AppCompatActivity() {
         oWinsCounter?.let { counter ->
             binding.oWinsCounter.text = resources.getString(R.string.o_wins_counter_text, counter)
         }
+    }
+
+    companion object {
+        private var toast: Toast? = null
     }
 }
