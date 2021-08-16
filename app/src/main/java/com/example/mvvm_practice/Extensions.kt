@@ -1,30 +1,56 @@
 package com.example.mvvm_practice
 
-import android.widget.ImageButton
-import androidx.core.content.ContextCompat
-import com.example.mvvm_practice.game.GameData
-
 const val TAG = "GAME"
 
-fun ImageButton.setOnCellStateImage(state: GameData.GameCellState) = when (state) {
-    GameData.GameCellState.EMPTY -> {
-        this.setImageResource(android.R.color.transparent)
+fun Array<Array<GameData.GameCell>>.print() {
+    val ansiGreen = "\u001B[32m"
+    val ansiRed = "\u001B[31m"
+    val ansiResetColor = "\u001B[0m"
+    println("Current field: ")
+    this.forEach { row ->
+        row.forEach { cell ->
+            when(cell.state) {
+                GameData.GameCellState.CROSS -> {
+                    print(ansiRed + "${cell.state} " + ansiResetColor)
+                }
+                GameData.GameCellState.CIRCLE -> {
+                    print(ansiGreen + "${cell.state} " + ansiResetColor)
+                }
+                else -> {
+                    print("${cell.state} ")
+                }
+            }
+        }
+        println()
     }
-    GameData.GameCellState.CIRCLE -> {
-        this.setImageDrawable(
-            ContextCompat.getDrawable(
-                this.context,
-                R.drawable.ic_outline_circle_24
-            )
-        )
+}
+
+fun Array<*>.contains(other: Array<*>): Boolean {
+    var contains = true
+    for (arrIndex in 0..(this.lastIndex - other.lastIndex)) {
+        for (arrIndex2 in other.indices) {
+            if (this[arrIndex + arrIndex2] != other[arrIndex2]) {
+                contains = false
+                break
+            }
+        }
+        if (contains) return true else contains = true
     }
-    GameData.GameCellState.CROSS -> {
-        this.imageTintMode
-        this.setImageDrawable(
-            ContextCompat.getDrawable(
-                this.context,
-                R.drawable.ic_outline_cross_24
-            )
-        )
+    return false
+}
+
+fun Array<*>.containsStartAt(other: Array<*>): Int? {
+    var contains = true
+    for (arrIndex in 0..(this.lastIndex - other.lastIndex)) {
+        for (arrIndex2 in other.indices) {
+            if (this[arrIndex + arrIndex2] != other[arrIndex2]) {
+                contains = false
+                break
+            }
+        }
+        if (contains) {
+            return arrIndex
+        } else contains = true
     }
+    return null
 }

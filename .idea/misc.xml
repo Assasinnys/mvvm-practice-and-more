@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout-v24/main_activity.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout/classic_game_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout/fragment_game.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout/game_field.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout/game_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout/main_activity.xml" value="0.36666666666666664" />
