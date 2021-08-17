@@ -1,4 +1,6 @@
-sealed class GameData {
+package com.example.mvvm_practice.game
+
+class GameData {
     enum class Player {
         O, X
     }

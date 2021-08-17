@@ -7,6 +7,34 @@
     tools:context=".ui.fragments.GameFragment">
 
     <include
+        android:id="@+id/game_fragment_top_app_bar"
+        layout="@layout/top_app_bar"/>
+
+    <TextView
+        android:id="@+id/x_wins_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/x_wins_counter_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/game_field"
+        app:layout_constraintEnd_toStartOf="@+id/o_wins_counter"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/o_wins_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/o_wins_counter_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/game_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/x_wins_counter"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
         android:id="@+id/game_field"
         layout="@layout/game_field" />
 

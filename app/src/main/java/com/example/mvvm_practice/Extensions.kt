@@ -1,5 +1,7 @@
 package com.example.mvvm_practice
 
+import com.example.mvvm_practice.game.GameData
+
 const val TAG = "GAME"
 
 fun Array<Array<GameData.GameCell>>.print() {
@@ -25,7 +27,7 @@ fun Array<Array<GameData.GameCell>>.print() {
     }
 }
 
-fun Array<*>.contains(other: Array<*>): Boolean {
+fun <T> Array<T>.contains(other: Array<T>): Boolean {
     var contains = true
     for (arrIndex in 0..(this.lastIndex - other.lastIndex)) {
         for (arrIndex2 in other.indices) {

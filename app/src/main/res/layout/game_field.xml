@@ -10,81 +10,81 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:id="@+id/row1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/first_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/second_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/third_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:id="@+id/row2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/fourth_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/fifth_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/sixth_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:id="@+id/row3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/seventh_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/eighth_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageButton
             android:id="@+id/ninth_cell"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
 </LinearLayout>

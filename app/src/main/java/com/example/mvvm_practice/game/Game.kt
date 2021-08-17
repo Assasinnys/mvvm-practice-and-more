@@ -1,24 +1,24 @@
 package com.example.mvvm_practice.game
 
-import GameData.Player
-import GameData.GameMode
-import GameData.GameState
-import GameData.Companion.gameModeToInt
-import GameData.Companion.indexIntoPosition
-import GameData.Companion.makeEmptyGameField
-import GameData.Companion.playerToCellState
-import GameData.Companion.standard_game_field
-import GameData.Companion.switchPlayer
+import com.example.mvvm_practice.game.GameData.Player
+import com.example.mvvm_practice.game.GameData.GameCellState
+import com.example.mvvm_practice.game.GameData.GameMode
+import com.example.mvvm_practice.game.GameData.GameState
+import com.example.mvvm_practice.game.GameData.Companion.gameModeToInt
+import com.example.mvvm_practice.game.GameData.Companion.indexIntoPosition
+import com.example.mvvm_practice.game.GameData.Companion.makeEmptyGameField
+import com.example.mvvm_practice.game.GameData.Companion.playerToCellState
+import com.example.mvvm_practice.game.GameData.Companion.standard_game_field
+import com.example.mvvm_practice.game.GameData.Companion.switchPlayer
 import androidx.lifecycle.LiveData
+import com.example.mvvm_practice.Grid
 import com.example.mvvm_practice.NotNullMutableLiveData
 import com.example.mvvm_practice.contains
-
-typealias Grid = Array<Array<GameData.GameCell>>
 
 class Game(
     initField: Grid = standard_game_field,
     initState: GameState = GameState.GAME,
-    private val initMode: GameMode = GameMode.THREE_TO_THREE
+    val initMode: GameMode = GameMode.THREE_TO_THREE
 ) {
     private val _field = NotNullMutableLiveData(initField)
     val field: LiveData<Grid> = _field
@@ -49,7 +49,7 @@ class Game(
         if (cellIndex in 0 until _field.value.size * _field.value.size) {
             val (row, column) = indexIntoPosition(cellIndex, _field.value.size)
             //Acting if cell is EMPTY and game active
-            return if (_field.value[row][column].state == GameData.GameCellState.EMPTY && state.value == GameState.GAME) {
+            return if (_field.value[row][column].state == GameCellState.EMPTY && state.value == GameState.GAME) {
                 println("onTurn: cellIndex: $cellIndex, currentPlayer: \"${currentPlayer}\"")
                 // Saving move
                 _field.value[row][column].state = playerToCellState(_currentPlayer.value)
@@ -70,9 +70,9 @@ class Game(
 
     //TODO
     //TODO scalability,
-    // MANY DIAGS CHECK, IF THERE IS MORE THAN 2 DIAGONALS
+    // MANY DIAGONALS CHECK, IF THERE IS MORE THAN 2 DIAGONALS
 
-    private fun hasWinState(cellToCheck: GameData.GameCellState): Boolean {
+    private fun hasWinState(cellToCheck: GameCellState): Boolean {
         val rowToCheck = Array(gameModeToInt(initMode)) {
             GameData.GameCell(cellToCheck)
         }
@@ -88,19 +88,19 @@ class Game(
             }
         }
         //Checking diagonals
-        //Main diag From top to bottom
+        //Main diagonals From top to bottom
         if (Array(_field.value.size) { index ->
                 _field.value[index][index]
             }.contains(rowToCheck)) {
             return true
         }
-        //Second diag from bottom to top
-        var secondDiag: Array<GameData.GameCell> = emptyArray()
+        //Second diagonals from bottom to top
+        var secondDiagonal: Array<GameData.GameCell> = emptyArray()
         for (rowIndex in _field.value.indices.reversed()) {
-            secondDiag =
-                secondDiag.plusElement(_field.value[rowIndex][_field.value.lastIndex - rowIndex])
+            secondDiagonal =
+                secondDiagonal.plusElement(_field.value[rowIndex][_field.value.lastIndex - rowIndex])
         }
-        if (secondDiag.contains(rowToCheck)) {
+        if (secondDiagonal.contains(rowToCheck)) {
             return true
         }
         //If no three in a row, then return false
@@ -113,8 +113,8 @@ class Game(
 
     private fun updateGameState() {
         //Checking X or O win
-        val xWinState = hasWinState(GameData.GameCellState.CROSS)
-        val oWinState = hasWinState(GameData.GameCellState.CIRCLE)
+        val xWinState = hasWinState(GameCellState.CROSS)
+        val oWinState = hasWinState(GameCellState.CIRCLE)
         println("X WINS: $xWinState, O WINS: $oWinState")
         //Checking isFull state
         var isFull = true
@@ -127,26 +127,26 @@ class Game(
         //Checking draw state
         if (isFull && !oWinState && !xWinState) {
             _state.value = GameState.DRAW
-            println("updateGameState: $state")
+            println("updateGameState: ${state.value}")
             return
         }
         //Checking impossible state
         if (oWinState && xWinState) {
             _state.value = GameState.ERROR
-            println("updateGameState: $state")
+            println("updateGameState: ${state.value}")
             return
         }
         var countOfX = 0
         var countOfO = 0
         field.value?.forEach { row ->
             row.forEach { cell ->
-                if (cell.state == GameData.GameCellState.CIRCLE) countOfO++
-                if (cell.state == GameData.GameCellState.CROSS) countOfX++
+                if (cell.state == GameCellState.CIRCLE) countOfO++
+                if (cell.state == GameCellState.CROSS) countOfX++
             }
         }
         if (maxOf(countOfO, countOfX) - minOf(countOfO, countOfX) >= 2) {
             _state.value = GameState.ERROR
-            println("updateGameState: $state")
+            println("updateGameState: ${state.value}")
             return
         }
         //Checking win state
@@ -160,6 +160,6 @@ class Game(
                 _oWinsCounter.value += 1
             }
         }
-        println("updateGameState: $state")
+        println("updateGameState: ${state.value}")
     }
 }

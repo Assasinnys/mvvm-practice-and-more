@@ -1,17 +1,18 @@
-package com.example.mvvm_practice.game
+package com.example.mvvm_practice.game.bot
 
-import GameBotData.Mode
-import GameData
-import GameData.Companion.gameModeToInt
-import GameData.Companion.playerToCellState
-import GameData.Companion.positionIntoIndex
-import GameData.Companion.switchPlayer
-import GameData.GameCellState
-import GameData.GameCell
-import GameData.GameMode
-import GameData.Player
+import com.example.mvvm_practice.game.bot.GameBotData.Mode
+import com.example.mvvm_practice.game.GameData
+import com.example.mvvm_practice.game.GameData.Companion.gameModeToInt
+import com.example.mvvm_practice.game.GameData.Companion.playerToCellState
+import com.example.mvvm_practice.game.GameData.Companion.positionIntoIndex
+import com.example.mvvm_practice.game.GameData.Companion.switchPlayer
+import com.example.mvvm_practice.game.GameData.GameCellState
+import com.example.mvvm_practice.game.GameData.GameCell
+import com.example.mvvm_practice.game.GameData.GameMode
+import com.example.mvvm_practice.game.GameData.Player
 import com.example.mvvm_practice.contains
 import com.example.mvvm_practice.containsStartAt
+import com.example.mvvm_practice.game.Game
 import com.example.mvvm_practice.print
 
 class GameBot(
