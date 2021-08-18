@@ -5,15 +5,13 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
     <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.mvvm_practice.ui.fragments.GameFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:layout="@layout/fragment_game" />
+    <include
+        android:id="@+id/app_content_main"
+        layout="@layout/app_content_main" />
 
     <!-- Container for contents of drawer -->
     <com.google.android.material.navigation.NavigationView
@@ -21,9 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:alpha="0.9"
+        android:alpha="0.85"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/header_navigation_drawer"
+        app:headerLayout="@layout/nav_header_drawer"
         app:menu="@menu/navigation_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

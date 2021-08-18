@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.game
+package com.example.mvvm_practice.gameCore
 
 class GameData {
     enum class Player {

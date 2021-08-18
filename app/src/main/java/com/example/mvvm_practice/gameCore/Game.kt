@@ -1,19 +1,19 @@
-package com.example.mvvm_practice.game
+package com.example.mvvm_practice.gameCore
 
-import com.example.mvvm_practice.game.GameData.Player
-import com.example.mvvm_practice.game.GameData.GameCellState
-import com.example.mvvm_practice.game.GameData.GameMode
-import com.example.mvvm_practice.game.GameData.GameState
-import com.example.mvvm_practice.game.GameData.Companion.gameModeToInt
-import com.example.mvvm_practice.game.GameData.Companion.indexIntoPosition
-import com.example.mvvm_practice.game.GameData.Companion.makeEmptyGameField
-import com.example.mvvm_practice.game.GameData.Companion.playerToCellState
-import com.example.mvvm_practice.game.GameData.Companion.standard_game_field
-import com.example.mvvm_practice.game.GameData.Companion.switchPlayer
+import com.example.mvvm_practice.gameCore.GameData.Player
+import com.example.mvvm_practice.gameCore.GameData.GameCellState
+import com.example.mvvm_practice.gameCore.GameData.GameMode
+import com.example.mvvm_practice.gameCore.GameData.GameState
+import com.example.mvvm_practice.gameCore.GameData.Companion.gameModeToInt
+import com.example.mvvm_practice.gameCore.GameData.Companion.indexIntoPosition
+import com.example.mvvm_practice.gameCore.GameData.Companion.makeEmptyGameField
+import com.example.mvvm_practice.gameCore.GameData.Companion.playerToCellState
+import com.example.mvvm_practice.gameCore.GameData.Companion.standard_game_field
+import com.example.mvvm_practice.gameCore.GameData.Companion.switchPlayer
 import androidx.lifecycle.LiveData
-import com.example.mvvm_practice.Grid
-import com.example.mvvm_practice.NotNullMutableLiveData
-import com.example.mvvm_practice.contains
+import com.example.mvvm_practice.extra.Grid
+import com.example.mvvm_practice.extra.NotNullMutableLiveData
+import com.example.mvvm_practice.extra.contains
 
 class Game(
     initField: Grid = standard_game_field,
@@ -50,7 +50,7 @@ class Game(
             val (row, column) = indexIntoPosition(cellIndex, _field.value.size)
             //Acting if cell is EMPTY and game active
             return if (_field.value[row][column].state == GameCellState.EMPTY && state.value == GameState.GAME) {
-                println("onTurn: cellIndex: $cellIndex, currentPlayer: \"${currentPlayer}\"")
+                println("onTurn: cellIndex: $cellIndex, currentPlayer: \"${currentPlayer.value}\"")
                 // Saving move
                 _field.value[row][column].state = playerToCellState(_currentPlayer.value)
                 // Switching current player

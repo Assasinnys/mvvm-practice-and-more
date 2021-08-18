@@ -1,24 +1,19 @@
-package com.example.mvvm_practice.ui.fragments
+package com.example.mvvm_practice.ui.game
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.Toast
-import androidx.annotation.IdRes
-import com.example.mvvm_practice.game.GameData.Companion.gameModeToInt
+import com.example.mvvm_practice.gameCore.GameData.Companion.gameModeToInt
 import androidx.fragment.app.viewModels
-import com.example.mvvm_practice.Grid
-import com.example.mvvm_practice.game.GameData.Companion.indexIntoPosition
+import com.example.mvvm_practice.extra.Grid
+import com.example.mvvm_practice.gameCore.GameData.Companion.indexIntoPosition
 import com.example.mvvm_practice.R
-import com.example.mvvm_practice.TAG
+import com.example.mvvm_practice.extra.TAG
 import com.example.mvvm_practice.databinding.FragmentGameBinding
-import com.example.mvvm_practice.game.GameData.GameState
-import com.example.mvvm_practice.game.GameData.GameCellState
-import com.example.mvvm_practice.viewModel.GameViewModel
+import com.example.mvvm_practice.gameCore.GameData.GameState
+import com.example.mvvm_practice.gameCore.GameData.GameCellState
 import com.google.android.material.snackbar.Snackbar
 import java.lang.ref.WeakReference
 
@@ -137,5 +132,6 @@ class GameFragment : Fragment() {
         super.onDestroyView()
         Log.i(TAG, "onDestroyView")
         _binding = null
+        snackbar = null
     }
 }

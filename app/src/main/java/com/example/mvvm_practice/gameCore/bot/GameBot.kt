@@ -1,19 +1,19 @@
-package com.example.mvvm_practice.game.bot
+package com.example.mvvm_practice.gameCore.bot
 
-import com.example.mvvm_practice.game.bot.GameBotData.Mode
-import com.example.mvvm_practice.game.GameData
-import com.example.mvvm_practice.game.GameData.Companion.gameModeToInt
-import com.example.mvvm_practice.game.GameData.Companion.playerToCellState
-import com.example.mvvm_practice.game.GameData.Companion.positionIntoIndex
-import com.example.mvvm_practice.game.GameData.Companion.switchPlayer
-import com.example.mvvm_practice.game.GameData.GameCellState
-import com.example.mvvm_practice.game.GameData.GameCell
-import com.example.mvvm_practice.game.GameData.GameMode
-import com.example.mvvm_practice.game.GameData.Player
-import com.example.mvvm_practice.contains
-import com.example.mvvm_practice.containsStartAt
-import com.example.mvvm_practice.game.Game
-import com.example.mvvm_practice.print
+import com.example.mvvm_practice.gameCore.bot.GameBotData.Mode
+import com.example.mvvm_practice.gameCore.GameData
+import com.example.mvvm_practice.gameCore.GameData.Companion.gameModeToInt
+import com.example.mvvm_practice.gameCore.GameData.Companion.playerToCellState
+import com.example.mvvm_practice.gameCore.GameData.Companion.positionIntoIndex
+import com.example.mvvm_practice.gameCore.GameData.Companion.switchPlayer
+import com.example.mvvm_practice.gameCore.GameData.GameCellState
+import com.example.mvvm_practice.gameCore.GameData.GameCell
+import com.example.mvvm_practice.gameCore.GameData.GameMode
+import com.example.mvvm_practice.gameCore.GameData.Player
+import com.example.mvvm_practice.extra.contains
+import com.example.mvvm_practice.extra.containsStartAt
+import com.example.mvvm_practice.gameCore.Game
+import com.example.mvvm_practice.extra.print
 
 class GameBot(
     private val game: Game,

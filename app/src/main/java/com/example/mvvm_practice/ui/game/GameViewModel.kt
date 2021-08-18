@@ -1,10 +1,10 @@
-package com.example.mvvm_practice.viewModel
+package com.example.mvvm_practice.ui.game
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.mvvm_practice.Grid
-import com.example.mvvm_practice.game.Game
-import com.example.mvvm_practice.game.GameData
+import com.example.mvvm_practice.extra.Grid
+import com.example.mvvm_practice.gameCore.Game
+import com.example.mvvm_practice.gameCore.GameData
 
 class GameViewModel : ViewModel() {
     private val game = Game()

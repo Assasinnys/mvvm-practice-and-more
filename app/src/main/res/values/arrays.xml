@@ -1,0 +1,19 @@
+<resources>
+    <!-- Root Preference -->
+
+    <!-- Storage Preference -->
+    <string-array name="order_entries">
+        <item>User Id</item>
+        <item>Nickname</item>
+        <item>First name</item>
+        <item>Second name</item>
+        <item>Age</item>
+    </string-array>
+    <string-array name="order_values">
+        <item>id</item>
+        <item>nickname</item>
+        <item>first_name</item>
+        <item>second_name</item>
+        <item>age</item>
+    </string-array>
+</resources>
