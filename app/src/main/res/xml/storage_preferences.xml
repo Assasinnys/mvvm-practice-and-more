@@ -4,7 +4,7 @@
     <ListPreference
         app:entries="@array/order_entries"
         app:entryValues="@array/order_values"
-        android:key="list"
+        android:key="order"
         app:useSimpleSummaryProvider="true"
         android:summary="@array/order_values"
         android:title="Order by" />

@@ -75,6 +75,7 @@ class AddLocalUserFragment : Fragment() {
                 )
                 if (isClickSuccessful) {
                     it.isClickable = false
+                    hideKeyboard()
                     activity?.onBackPressed()
                 } else {
                     // Set error text

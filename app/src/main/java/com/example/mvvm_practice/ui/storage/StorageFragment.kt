@@ -17,6 +17,7 @@ import com.example.mvvm_practice.databinding.FragmentAboutBinding
 import com.example.mvvm_practice.databinding.FragmentStorageBinding
 import com.example.mvvm_practice.extra.TAG
 import com.example.mvvm_practice.ui.about.AboutViewModel
+import com.example.mvvm_practice.ui.storage.model.LocalUser
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StorageFragment : Fragment() {
@@ -47,9 +48,14 @@ class StorageFragment : Fragment() {
 
         binding.apply {
             viewModel.allLocalUsers.observe(viewLifecycleOwner, { users ->
-                users?.let {
-                    adapter.submitList(it)
+                users?.let { list ->
+                    adapter.submitList(viewModel.sortedList(list))
+                    Log.i(TAG, "list observe")
                 }
+            })
+
+            viewModel.orderBy.observe(viewLifecycleOwner, {
+                Log.i(TAG, "orderBy observer: $it")
             })
 
             recyclerview.apply {

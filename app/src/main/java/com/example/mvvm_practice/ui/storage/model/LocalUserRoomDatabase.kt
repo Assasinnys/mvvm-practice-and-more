@@ -8,7 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 
 // Annotates class to be a Room Database with a table (entity) of the LocalUser class
-@Database(entities = [LocalUser::class], version = 1, exportSchema = false)
+@Database(entities = [LocalUser::class], version = 2, exportSchema = false)
 abstract class LocalUserRoomDatabase : RoomDatabase() {
 
     abstract fun localUserDao(): LocalUserDao
@@ -30,6 +30,7 @@ abstract class LocalUserRoomDatabase : RoomDatabase() {
                     "user_database"
                 )
                     .addCallback(LocalUserDatabaseCallback(scope))
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 // return instance
