@@ -42,6 +42,8 @@ class StorageSettingsFragment : PreferenceFragmentCompat() {
         val orderPreference =
             preferenceManager.findPreference<ListPreference>("order") as ListPreference
 
+
+
         orderPreference.setOnPreferenceChangeListener { preference, newValue ->
             viewModel.updateOrderBy(newValueToOrderId(newValue.toString()))
             Log.i("GAME", "summary changed: \"${preference.summary}\" to \"$newValue\"")

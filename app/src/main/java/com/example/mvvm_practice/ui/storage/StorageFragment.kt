@@ -1,5 +1,6 @@
 package com.example.mvvm_practice.ui.storage
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -49,10 +50,18 @@ class StorageFragment : Fragment() {
         binding.apply {
             viewModel.allLocalUsers.observe(viewLifecycleOwner, { users ->
                 users?.let { list ->
-                    adapter.submitList(viewModel.sortedList(list))
-                    Log.i(TAG, "list observe")
+                    adapter.submitList(list /*viewModel.sortedList(list)*/)
+                    Log.i(TAG, "list observe ${activity?.getSharedPreferences(context?.packageName + "_preferences", Context.MODE_PRIVATE)?.getString("order", "227")}")
                 }
             })
+            /*TODO
+             * В адаптер ресайклера отправить DAO, или сам адаптер сделать синглотоном в модуле коина.
+             * Все настройки при СОЗДАНИИ и ИЗМЕНЕНИИ отправлять в главную вьюмодель. activity.viewModel.updateSomeSetting(setting) также и забирать, например,
+             * отобразить список базы данных.
+             * Главную вьюмодель через koin inject'нуть.
+             *
+             * TODO ИСПРАВИТЬ КОСТЫЛИ С ФИЛЬТРОМ В НАСТРОЙКАХ STORAGE
+             */
 
             viewModel.orderBy.observe(viewLifecycleOwner, {
                 Log.i(TAG, "orderBy observer: $it")
