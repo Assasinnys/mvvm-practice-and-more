@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LocalUserDao {
 
-    @Query("SELECT * FROM local_user_table ORDER BY id ASC")
+    @Query("SELECT * FROM local_user_table ORDER BY user_id ASC")
     fun getLocalUsersASC(): Flow<List<LocalUser>>
 
-    @Query("SELECT * FROM local_user_table ORDER BY id DESC")
+    @Query("SELECT * FROM local_user_table ORDER BY user_id DESC")
     fun getLocalUsersDESC(): Flow<List<LocalUser>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
