@@ -11,7 +11,7 @@ import com.example.mvvm_practice.R
 import com.example.mvvm_practice.data.LocalUser
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class LocalUserListAdapter(private val viewModel: StorageViewModel) :
+class LocalUserListAdapter(private val onEditClickListener: (localUser: LocalUser) -> Unit) :
     ListAdapter<LocalUser, LocalUserListAdapter.LocalUserViewHolder>(LocalUsersComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocalUserViewHolder {
@@ -19,11 +19,15 @@ class LocalUserListAdapter(private val viewModel: StorageViewModel) :
     }
 
     override fun onBindViewHolder(holder: LocalUserViewHolder, position: Int) {
-        getItem(position).apply {
-            holder.bind(id, nickname, firstName, secondName, age)
-        }
-        holder.deleteItemView.setOnClickListener {
-            viewModel.delete(getItem(position))
+        holder.apply {
+            getItem(position).apply {
+                bind(id, nickname, firstName, secondName, age)
+
+                editItemView.setOnClickListener {
+                    onEditClickListener(this)
+                    //TODO Callback to fragment
+                }
+            }
         }
     }
 
@@ -33,7 +37,7 @@ class LocalUserListAdapter(private val viewModel: StorageViewModel) :
         private val firstNameItemView: TextView = itemView.findViewById(R.id.first_name)
         private val secondNameItemView: TextView = itemView.findViewById(R.id.second_name)
         private val ageItemView: TextView = itemView.findViewById(R.id.age)
-        val deleteItemView: FloatingActionButton = itemView.findViewById(R.id.delete_user)
+        val editItemView: FloatingActionButton = itemView.findViewById(R.id.edit_user)
 
         fun bind(id: Int, nickname: String, firstName: String?, secondName: String?, age: Int?) {
             idItemView.text = "id: $id"

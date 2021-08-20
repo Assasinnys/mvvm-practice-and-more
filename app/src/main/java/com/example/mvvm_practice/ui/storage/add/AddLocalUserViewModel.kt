@@ -16,16 +16,29 @@ class AddLocalUserViewModel(private val repository: LocalUserRepository) : ViewM
         firstName: Editable?,
         secondName: Editable?,
         age: Editable?,
+        id: Int? = null
     ): Boolean {
         if (nickname.toString().contentEquals("")) return false
-        insert(
-            LocalUser(
-                nickname = nickname.toString(),
-                firstName = firstName.toString(),
-                secondName = secondName.toString(),
-                age = age.toString().toIntOrNull()
+        if (id == null) {
+            insert(
+                LocalUser(
+                    nickname = nickname.toString(),
+                    firstName = firstName.toString(),
+                    secondName = secondName.toString(),
+                    age = age.toString().toIntOrNull()
+                )
             )
-        )
+        } else {
+            update(
+                LocalUser(
+                    id = id,
+                    nickname = nickname.toString(),
+                    firstName = firstName.toString(),
+                    secondName = secondName.toString(),
+                    age = age.toString().toIntOrNull()
+                )
+            )
+        }
         return true
     }
 
@@ -34,5 +47,9 @@ class AddLocalUserViewModel(private val repository: LocalUserRepository) : ViewM
      */
     private fun insert(localUser: LocalUser) = viewModelScope.launch {
         repository.insert(localUser)
+    }
+
+    private fun update(localUser: LocalUser) = viewModelScope.launch {
+        repository.update(localUser)
     }
 }

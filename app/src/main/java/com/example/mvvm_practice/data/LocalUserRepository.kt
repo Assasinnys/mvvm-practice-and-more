@@ -29,6 +29,11 @@ class LocalUserRepository(private val localUserDao: LocalUserDao) {
     }
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    suspend fun deleteById(id: Int) {
+        localUserDao.deleteById(id)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun delete(localUser: LocalUser) {
         localUserDao.delete(localUser)
     }

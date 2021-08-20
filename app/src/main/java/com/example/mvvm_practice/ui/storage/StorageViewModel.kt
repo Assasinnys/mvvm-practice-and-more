@@ -47,6 +47,10 @@ class StorageViewModel(private val repository: LocalUserRepository) : ViewModel(
     /**
      * Launching a new coroutine to manage the data in a non-blocking way
      */
+    fun deleteById(id: Int) = viewModelScope.launch {
+        repository.deleteById(id)
+    }
+
     fun delete(localUser: LocalUser) = viewModelScope.launch {
         repository.delete(localUser)
     }

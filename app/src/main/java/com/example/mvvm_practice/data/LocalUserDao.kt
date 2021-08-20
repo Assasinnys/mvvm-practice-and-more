@@ -13,7 +13,7 @@ interface LocalUserDao {
     fun getLocalUsersDESC(): Flow<List<LocalUser>>
 
     @Update
-    fun updateLocalUser(user: LocalUser)
+    suspend fun updateLocalUser(user: LocalUser)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: LocalUser)

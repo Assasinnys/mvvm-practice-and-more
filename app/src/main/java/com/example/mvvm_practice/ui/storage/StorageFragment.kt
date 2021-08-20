@@ -4,9 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_practice.R
 import com.example.mvvm_practice.databinding.FragmentStorageBinding
 import com.example.mvvm_practice.extra.TAG
@@ -37,7 +41,22 @@ class StorageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val adapter = LocalUserListAdapter(get())
+        val navController = findNavController()
+
+        val adapter = LocalUserListAdapter { userToEdit ->
+            userToEdit.apply {
+                navController.navigate(
+                    R.id.action_nav_storage_to_addLocalUserFragment,
+                    bundleOf(
+                        "id" to id,
+                        "nickname" to nickname,
+                        "first_name" to firstName,
+                        "second_name" to secondName,
+                        "age" to age
+                    )
+                )
+            }
+        }
 
         subscribeUi(adapter)
 
@@ -46,13 +65,44 @@ class StorageFragment : Fragment() {
                 this.adapter = adapter
                 layoutManager = LinearLayoutManager(context)
             }
+
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val userId =
+                        viewHolder.itemView.findViewById<TextView>(R.id.user_id).text.toString()
+                            .substringAfter("id: ").trim()
+                            .toIntOrNull()
+                    Log.i(TAG, "onSwiped: userId: $userId")
+                    userId?.let {
+                        viewModel.deleteById(userId)
+                    }
+                }
+            }).attachToRecyclerView(recyclerview)
         }
     }
 
     private fun subscribeUi(adapter: LocalUserListAdapter) {
         viewModel.allLocalUsers.observe(viewLifecycleOwner) {
-            val orderPreference = activity?.getSharedPreferences(context?.packageName + "_preferences", Context.MODE_PRIVATE)?.getString("order", "")
-            adapter.submitList(viewModel.getOrderedAllLocalUsers(orderPreference?.toIntOrNull() ?: 0))
+            val orderPreference = activity?.getSharedPreferences(
+                context?.packageName + "_preferences",
+                Context.MODE_PRIVATE
+            )?.getString("order", "")
+            adapter.submitList(
+                viewModel.getOrderedAllLocalUsers(
+                    orderPreference?.toIntOrNull() ?: 0
+                )
+            )
             Log.i(TAG, "subscribeUi: orderPref: $orderPreference")
         }
     }

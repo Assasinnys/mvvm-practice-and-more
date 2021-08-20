@@ -37,4 +37,5 @@
     <string name="delete_user">delete user</string>
     <string name="filter">Filter</string>
     <string name="about">About</string>
+    <string name="edit_user">edit user</string>
 </resources>

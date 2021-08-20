@@ -11,10 +11,7 @@ import android.widget.AutoCompleteTextView
 import androidx.core.widget.addTextChangedListener
 import com.example.mvvm_practice.R
 import com.example.mvvm_practice.databinding.FragmentAddLocalUserBinding
-import com.example.mvvm_practice.extra.TAG
-import com.example.mvvm_practice.extra.hideKeyboard
-import com.example.mvvm_practice.extra.resetOrientation
-import com.example.mvvm_practice.extra.setPortraitOrientation
+import com.example.mvvm_practice.extra.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddLocalUserFragment : Fragment() {
@@ -37,6 +34,8 @@ class AddLocalUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setPortraitOrientation()
+        initInputFields()
+        initAddUserButton()
 
         binding.apply {
             view.setOnClickListener {
@@ -63,12 +62,29 @@ class AddLocalUserFragment : Fragment() {
                     viewModel.ageAutoCompleteTextViewItems
                 )
             )
+        }
+    }
 
-            initAddUserButton()
+    private fun initInputFields() {
+        arguments?.apply {
+            val nickname: String = getString("nickname", "")
+            val firstName = getString("first_name", "")
+            val secondName = getString("second_name", "")
+            val age: Int = getInt("age", INVALID_VALUE)
+
+            binding.apply {
+                textFieldNickname.editText?.setText(nickname)
+                textFieldFirstName.editText?.setText(firstName)
+                textFieldSecondName.editText?.setText(secondName)
+                textFieldAge.editText?.setText(age.toString())
+            }
         }
     }
 
     private fun initAddUserButton() {
+        var id: Int? = arguments?.getInt("id", INVALID_VALUE)
+        if (id == INVALID_VALUE) id = null
+        //if id passed as argument to add user fragment, then update existing user
         binding.apply {
             var isClickSuccessful: Boolean
             buttonAddUser.setOnClickListener {
@@ -76,7 +92,8 @@ class AddLocalUserFragment : Fragment() {
                     textFieldNickname.editText?.text,
                     textFieldFirstName.editText?.text,
                     textFieldSecondName.editText?.text,
-                    textFieldAge.editText?.text
+                    textFieldAge.editText?.text,
+                    id
                 )
                 if (isClickSuccessful) {
                     it.isClickable = false
