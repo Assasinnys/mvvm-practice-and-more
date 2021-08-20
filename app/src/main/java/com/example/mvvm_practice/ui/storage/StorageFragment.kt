@@ -115,6 +115,7 @@ class StorageFragment : Fragment() {
         val navController = findNavController()
         return when (item.itemId) {
             R.id.nav_about_storage -> {
+                navController.navigate(R.id.action_nav_storage_to_aboutStorageFragment)
                 // navigate to about settings screen
                 true
             }

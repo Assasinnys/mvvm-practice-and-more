@@ -4,6 +4,8 @@ import com.example.mvvm_practice.ui.storage.StorageViewModel
 import com.example.mvvm_practice.ui.storage.add.AddLocalUserViewModel
 import com.example.mvvm_practice.data.LocalUserRepository
 import com.example.mvvm_practice.data.LocalUserRoomDatabase
+import com.example.mvvm_practice.ui.about.AboutViewModel
+import com.example.mvvm_practice.ui.storage.about.AboutStorageViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,4 +21,6 @@ val appModule = module {
 
     viewModel { StorageViewModel(get()) }
     viewModel { AddLocalUserViewModel(get()) }
+    viewModel { AboutViewModel(get()) }
+    viewModel { AboutStorageViewModel(get()) }
 }

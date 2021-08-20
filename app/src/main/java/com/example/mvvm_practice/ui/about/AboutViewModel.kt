@@ -1,10 +1,9 @@
 package com.example.mvvm_practice.ui.about
 
 import androidx.lifecycle.ViewModel
+import com.example.mvvm_practice.data.LocalUserRepository
 
-class AboutViewModel : ViewModel() {
+class AboutViewModel(private val repository: LocalUserRepository) : ViewModel() {
 
-    fun getText() =
-        "Негласное правило: \"в прилаге зачастую и инет и бд. и получается RemoteUser (инет), User (ui), LocalUser (DB)\"\n" +
-                "This app was created and under active development by Arseni (Belarussianin) from Minsk."
+    fun getTextAboutApp() = repository.getTextAboutApp()
 }

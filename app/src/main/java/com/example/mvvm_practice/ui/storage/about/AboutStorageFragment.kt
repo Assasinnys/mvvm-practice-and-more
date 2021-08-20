@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.ui.about
+package com.example.mvvm_practice.ui.storage.about
 
 import android.os.Bundle
 import android.util.Log
@@ -6,29 +6,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mvvm_practice.databinding.FragmentAboutBinding
+import com.example.mvvm_practice.databinding.FragmentAboutStorageBinding
 import com.example.mvvm_practice.extra.TAG
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AboutFragment : Fragment() {
+class AboutStorageFragment : Fragment() {
     // The View Binding
-    private var _binding: FragmentAboutBinding? = null
+    private var _binding: FragmentAboutStorageBinding? = null
     private val binding get() = _binding!!
 
     // The View Model
-    private val viewModel by viewModel<AboutViewModel>()
+    private val viewModel by viewModel<AboutStorageViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentAboutBinding.inflate(inflater, container, false).also {
+    ): View = FragmentAboutStorageBinding.inflate(inflater, container, false).also {
         _binding = it
     }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            textview.text = viewModel.getTextAboutApp()
+            textview.text = viewModel.getTextAboutStorage()
         }
     }
 

@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_nav_storage_to_storageSettingsFragment"
             app:destination="@id/nav_storage_settings" />
+        <action
+            android:id="@+id/action_nav_storage_to_aboutStorageFragment"
+            app:destination="@id/nav_storage_about" />
     </fragment>
     <fragment
         android:id="@+id/nav_about"
@@ -40,4 +43,9 @@
         android:id="@+id/nav_storage_settings"
         android:name="com.example.mvvm_practice.ui.storage.settings.StorageSettingsFragment"
         android:label="Storage Settings" />
+    <fragment
+        android:id="@+id/nav_storage_about"
+        android:name="com.example.mvvm_practice.ui.storage.about.AboutStorageFragment"
+        android:label="About Storage"
+        tools:layout="@layout/fragment_about_storage" />
 </navigation>
