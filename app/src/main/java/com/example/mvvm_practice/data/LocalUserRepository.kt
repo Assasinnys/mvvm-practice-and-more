@@ -15,9 +15,13 @@ class LocalUserRepository(private val localUserDao: LocalUserDao) {
 
     fun getTextAboutApp() =
         "Негласное правило: \"в прилаге зачастую и инет и бд. и получается RemoteUser (инет), User (ui), LocalUser (DB)\"\n" +
-                "This app was created and under active development by Arseni (Belarussianin) from Minsk."
+                "This app was created and under active development by Arseni (Belarussianin) from Minsk.\n" +
+                "Github account: https://github.com/Belarussianin"
 
-    fun getTextAboutStorage() = "In the top app bar buttons: settings, add user.\nSwipe left or right to delete item\nThank you for your attention."
+    fun getTextAboutStorage() =
+        "This is task 4 from rs.school https://github.com/rolling-scopes-school/rs.android.task.4 \n" +
+                "My completed task & more: https://github.com/Belarussianin/mvvm-practice-and-more" +
+                "\nIn the top app bar buttons: settings, add user.\nSwipe left or right to delete item\nThank you for your attention."
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work

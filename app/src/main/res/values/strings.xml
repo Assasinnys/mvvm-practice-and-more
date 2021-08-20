@@ -26,7 +26,6 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="text_preview">Some text for preview</string>
-    <string name="about_storage_fragment">This is task 4 from rs.school.\nhttps://github.com/rolling-scopes-school/rs.android.task.4…</string>
     <string name="settings_header">There will be preference list</string>
     <string name="input_first_name_hint">First name</string>
     <string name="input_age_hint">Age</string>
