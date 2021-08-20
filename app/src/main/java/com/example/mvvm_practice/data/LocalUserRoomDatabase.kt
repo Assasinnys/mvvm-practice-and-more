@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.ui.storage.model
+package com.example.mvvm_practice.data
 
 import android.content.Context
 import androidx.room.Database
@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the LocalUser class
 @Database(entities = [LocalUser::class], version = 2, exportSchema = false)
@@ -46,11 +47,11 @@ abstract class LocalUserRoomDatabase : RoomDatabase() {
                 super.onCreate(db)
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
-//                INSTANCE?.let { database ->
-//                    scope.launch {
-//                        populateDatabase(database.localUserDao())
-//                    }
-//                }
+                INSTANCE?.let { database ->
+                    scope.launch {
+                        populateDatabase(database.localUserDao())
+                    }
+                }
             }
 
             /**
@@ -74,7 +75,35 @@ abstract class LocalUserRoomDatabase : RoomDatabase() {
                     nickname = "AlexKray",
                     firstName = "Alex",
                     secondName = "Androider",
-                    age = 228
+                    age = 227
+                )
+                localUserDao.insert(localUser)
+                localUser = LocalUser(
+                    nickname = "Belarussianin",
+                    firstName = "Arseni",
+                    secondName = "Kasheuski",
+                    age = 226
+                )
+                localUserDao.insert(localUser)
+                localUser = LocalUser(
+                    nickname = "Bor9",
+                    firstName = "Alex",
+                    secondName = "Androider",
+                    age = 225
+                )
+                localUserDao.insert(localUser)
+                localUser = LocalUser(
+                    nickname = "Gen0ciD",
+                    firstName = "sql",
+                    secondName = "pointer",
+                    age = 224
+                )
+                localUserDao.insert(localUser)
+                localUser = LocalUser(
+                    nickname = "devlee",
+                    firstName = "Kazahstanos",
+                    secondName = "Seniorovich",
+                    age = 32
                 )
                 localUserDao.insert(localUser)
 

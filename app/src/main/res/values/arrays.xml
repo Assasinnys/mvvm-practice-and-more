@@ -10,10 +10,10 @@
         <item>Age</item>
     </string-array>
     <string-array name="order_values">
-        <item>id</item>
-        <item>nickname</item>
-        <item>first_name</item>
-        <item>second_name</item>
-        <item>age</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 </resources>

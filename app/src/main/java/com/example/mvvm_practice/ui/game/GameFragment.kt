@@ -12,6 +12,8 @@ import com.example.mvvm_practice.gameCore.GameData.Companion.indexIntoPosition
 import com.example.mvvm_practice.R
 import com.example.mvvm_practice.extra.TAG
 import com.example.mvvm_practice.databinding.FragmentGameBinding
+import com.example.mvvm_practice.extra.resetOrientation
+import com.example.mvvm_practice.extra.setPortraitOrientation
 import com.example.mvvm_practice.gameCore.GameData.GameState
 import com.example.mvvm_practice.gameCore.GameData.GameCellState
 import com.google.android.material.snackbar.Snackbar
@@ -37,6 +39,8 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setPortraitOrientation()
 
         binding.apply {
             val cells: Array<ImageButton>
@@ -124,14 +128,17 @@ class GameFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        Log.i(TAG, "onStop")
+        Log.i(TAG, "onStop: game")
+        snackbar?.clear()
         snackbar = null
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.i(TAG, "onDestroyView")
+        Log.i(TAG, "onDestroyView: game")
         _binding = null
+        snackbar?.clear()
         snackbar = null
+        resetOrientation()
     }
 }

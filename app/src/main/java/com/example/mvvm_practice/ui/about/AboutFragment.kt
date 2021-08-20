@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.mvvm_practice.databinding.FragmentAboutBinding
 import com.example.mvvm_practice.extra.TAG
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutFragment : Fragment() {
     // The View Binding

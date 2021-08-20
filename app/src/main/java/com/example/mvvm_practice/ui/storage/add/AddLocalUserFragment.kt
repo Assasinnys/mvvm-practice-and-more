@@ -13,6 +13,8 @@ import com.example.mvvm_practice.R
 import com.example.mvvm_practice.databinding.FragmentAddLocalUserBinding
 import com.example.mvvm_practice.extra.TAG
 import com.example.mvvm_practice.extra.hideKeyboard
+import com.example.mvvm_practice.extra.resetOrientation
+import com.example.mvvm_practice.extra.setPortraitOrientation
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddLocalUserFragment : Fragment() {
@@ -33,6 +35,9 @@ class AddLocalUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setPortraitOrientation()
+
         binding.apply {
             view.setOnClickListener {
                 textFieldNickname.apply {
@@ -87,7 +92,8 @@ class AddLocalUserFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.i(TAG, "onDestroyView")
+        Log.i(TAG, "onDestroyView: add user")
         _binding = null
+        resetOrientation()
     }
 }

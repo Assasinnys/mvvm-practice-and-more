@@ -1,6 +1,5 @@
-package com.example.mvvm_practice.ui.storage.model
+package com.example.mvvm_practice.data
 
-import android.location.Address
 import androidx.room.*
 
 // До лучших времён

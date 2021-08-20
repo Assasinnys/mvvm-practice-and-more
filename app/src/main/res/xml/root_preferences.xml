@@ -1,5 +1,5 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<!--
     <SwitchPreferenceCompat
         app:key="theme"
         app:title="Enable dark theme" />
@@ -8,5 +8,7 @@
         app:key="feedback"
         app:summary="Report technical issues or suggest new features"
         app:title="Send feedback" />
-
+    -->
+    <Preference
+        app:title="Not yet implemented" />
 </PreferenceScreen>

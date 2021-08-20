@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.ui.storage.model
+package com.example.mvvm_practice.data
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
@@ -21,5 +21,15 @@ class LocalUserRepository(private val localUserDao: LocalUserDao) {
     @WorkerThread
     suspend fun insert(localUser: LocalUser) {
         localUserDao.insert(localUser)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun update(localUser: LocalUser) {
+        localUserDao.updateLocalUser(localUser)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun delete(localUser: LocalUser) {
+        localUserDao.delete(localUser)
     }
 }

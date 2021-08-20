@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_practice.R
-import com.example.mvvm_practice.ui.storage.model.LocalUser
+import com.example.mvvm_practice.data.LocalUser
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class LocalUserListAdapter :
+class LocalUserListAdapter(private val viewModel: StorageViewModel) :
     ListAdapter<LocalUser, LocalUserListAdapter.LocalUserViewHolder>(LocalUsersComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocalUserViewHolder {
@@ -21,6 +22,9 @@ class LocalUserListAdapter :
         getItem(position).apply {
             holder.bind(id, nickname, firstName, secondName, age)
         }
+        holder.deleteItemView.setOnClickListener {
+            viewModel.delete(getItem(position))
+        }
     }
 
     class LocalUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,6 +33,7 @@ class LocalUserListAdapter :
         private val firstNameItemView: TextView = itemView.findViewById(R.id.first_name)
         private val secondNameItemView: TextView = itemView.findViewById(R.id.second_name)
         private val ageItemView: TextView = itemView.findViewById(R.id.age)
+        val deleteItemView: FloatingActionButton = itemView.findViewById(R.id.delete_user)
 
         fun bind(id: Int, nickname: String, firstName: String?, secondName: String?, age: Int?) {
             idItemView.text = "id: $id"

@@ -2,12 +2,15 @@ package com.example.mvvm_practice.extra
 
 import android.app.Activity
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.example.mvvm_practice.gameCore.GameData
 
-const val TAG = "GAME"
+fun Fragment.setPortraitOrientation() { activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT }
+
+fun Fragment.resetOrientation() { activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR }
 
 fun Fragment.hideKeyboard() = view?.let { activity?.hideKeyboard(it) }
 

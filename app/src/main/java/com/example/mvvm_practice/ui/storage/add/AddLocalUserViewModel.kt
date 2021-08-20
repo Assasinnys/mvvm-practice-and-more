@@ -3,8 +3,8 @@ package com.example.mvvm_practice.ui.storage.add
 import android.text.Editable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mvvm_practice.ui.storage.model.LocalUser
-import com.example.mvvm_practice.ui.storage.model.LocalUserRepository
+import com.example.mvvm_practice.data.LocalUser
+import com.example.mvvm_practice.data.LocalUserRepository
 import kotlinx.coroutines.launch
 
 class AddLocalUserViewModel(private val repository: LocalUserRepository) : ViewModel() {
