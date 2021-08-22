@@ -2,8 +2,8 @@ package com.example.mvvm_practice.di
 
 import com.example.mvvm_practice.ui.storage.StorageViewModel
 import com.example.mvvm_practice.ui.storage.add.AddLocalUserViewModel
-import com.example.mvvm_practice.data.LocalUserRepository
-import com.example.mvvm_practice.data.LocalUserRoomDatabase
+import com.example.mvvm_practice.repository.Repository
+import com.example.mvvm_practice.repository.room.LocalUserDatabase
 import com.example.mvvm_practice.ui.about.AboutViewModel
 import com.example.mvvm_practice.ui.storage.about.AboutStorageViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -15,9 +15,9 @@ val appModule = module {
     single { CoroutineScope(SupervisorJob()) }
 
     // Database
-    single { LocalUserRoomDatabase.getDatabase(get(), get()) }
+    single { LocalUserDatabase.getDatabase(get(), get()) }
     // Repository
-    single { LocalUserRepository(get<LocalUserRoomDatabase>().localUserDao()) }
+    single { Repository(get<LocalUserDatabase>().localUserDao()) }
 
     viewModel { StorageViewModel(get()) }
     viewModel { AddLocalUserViewModel(get()) }

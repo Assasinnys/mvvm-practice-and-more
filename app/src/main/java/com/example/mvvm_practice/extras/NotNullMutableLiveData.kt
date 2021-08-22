@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.extra
+package com.example.mvvm_practice.extras
 
 import androidx.lifecycle.LiveData
 

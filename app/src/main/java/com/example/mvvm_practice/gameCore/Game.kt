@@ -11,9 +11,9 @@ import com.example.mvvm_practice.gameCore.GameData.Companion.playerToCellState
 import com.example.mvvm_practice.gameCore.GameData.Companion.standard_game_field
 import com.example.mvvm_practice.gameCore.GameData.Companion.switchPlayer
 import androidx.lifecycle.LiveData
-import com.example.mvvm_practice.extra.Grid
-import com.example.mvvm_practice.extra.NotNullMutableLiveData
-import com.example.mvvm_practice.extra.contains
+import com.example.mvvm_practice.extras.Grid
+import com.example.mvvm_practice.extras.NotNullMutableLiveData
+import com.example.mvvm_practice.extras.contains
 
 class Game(
     initField: Grid = standard_game_field,

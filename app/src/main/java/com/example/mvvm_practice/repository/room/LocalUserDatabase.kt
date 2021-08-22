@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.data
+package com.example.mvvm_practice.repository.room
 
 import android.content.Context
 import androidx.room.Database
@@ -10,24 +10,24 @@ import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the LocalUser class
 @Database(entities = [LocalUser::class], version = 2, exportSchema = false)
-abstract class LocalUserRoomDatabase : RoomDatabase() {
+abstract class LocalUserDatabase : RoomDatabase() {
 
     abstract fun localUserDao(): LocalUserDao
 
     companion object {
         @Volatile
-        private var INSTANCE: LocalUserRoomDatabase? = null
+        private var INSTANCE: LocalUserDatabase? = null
 
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): LocalUserRoomDatabase {
+        ): LocalUserDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    LocalUserRoomDatabase::class.java,
+                    LocalUserDatabase::class.java,
                     "user_database"
                 )
                     .addCallback(LocalUserDatabaseCallback(scope))

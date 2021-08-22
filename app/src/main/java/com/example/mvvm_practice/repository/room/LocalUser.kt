@@ -1,15 +1,6 @@
-package com.example.mvvm_practice.data
+package com.example.mvvm_practice.repository.room
 
 import androidx.room.*
-
-// До лучших времён
-//data class Address(
-//    val country: String?,
-//    val street: String?,
-//    val state: String?,
-//    val city: String?,
-//    @ColumnInfo(name = "post_code") val postCode: Int?
-//)
 
 @Entity(tableName = "local_user_table")
 data class LocalUser(
@@ -17,8 +8,7 @@ data class LocalUser(
     @ColumnInfo(name = "nickname") val nickname: String,
     @ColumnInfo(name = "first_name") val firstName: String?,
     @ColumnInfo(name = "second_name") val secondName: String?,
-    val age: Int?,
-    //@Embedded val address: Address?
+    val age: Int?
 ) {
     constructor(nickname: String, firstName: String?, secondName: String?, age: Int?) : this(
         0,

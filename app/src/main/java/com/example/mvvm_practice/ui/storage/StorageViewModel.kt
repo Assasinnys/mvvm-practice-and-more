@@ -2,12 +2,12 @@ package com.example.mvvm_practice.ui.storage
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.mvvm_practice.data.LocalUser
-import com.example.mvvm_practice.data.LocalUserRepository
-import com.example.mvvm_practice.extra.TAG
+import com.example.mvvm_practice.repository.room.LocalUser
+import com.example.mvvm_practice.repository.Repository
+import com.example.mvvm_practice.extras.TAG
 import kotlinx.coroutines.launch
 
-class StorageViewModel(private val repository: LocalUserRepository) : ViewModel() {
+class StorageViewModel(private val repository: Repository) : ViewModel() {
 
     // Using LiveData and caching what allLocalUsers returns has several benefits:
     // - We can put an observer on the data (instead of polling for changes) and only update the

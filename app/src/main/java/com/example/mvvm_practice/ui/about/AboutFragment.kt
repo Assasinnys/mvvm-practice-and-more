@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.mvvm_practice.databinding.FragmentAboutBinding
-import com.example.mvvm_practice.extra.TAG
+import com.example.mvvm_practice.extras.TAG
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutFragment : Fragment() {

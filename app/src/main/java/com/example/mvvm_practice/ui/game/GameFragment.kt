@@ -7,13 +7,13 @@ import androidx.fragment.app.Fragment
 import android.widget.ImageButton
 import com.example.mvvm_practice.gameCore.GameData.Companion.gameModeToInt
 import androidx.fragment.app.viewModels
-import com.example.mvvm_practice.extra.Grid
+import com.example.mvvm_practice.extras.Grid
 import com.example.mvvm_practice.gameCore.GameData.Companion.indexIntoPosition
 import com.example.mvvm_practice.R
-import com.example.mvvm_practice.extra.TAG
+import com.example.mvvm_practice.extras.TAG
 import com.example.mvvm_practice.databinding.FragmentGameBinding
-import com.example.mvvm_practice.extra.resetOrientation
-import com.example.mvvm_practice.extra.setPortraitOrientation
+import com.example.mvvm_practice.extras.resetOrientation
+import com.example.mvvm_practice.extras.setPortraitOrientation
 import com.example.mvvm_practice.gameCore.GameData.GameState
 import com.example.mvvm_practice.gameCore.GameData.GameCellState
 import com.google.android.material.snackbar.Snackbar

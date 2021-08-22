@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.ui.main
+package com.example.mvvm_practice
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

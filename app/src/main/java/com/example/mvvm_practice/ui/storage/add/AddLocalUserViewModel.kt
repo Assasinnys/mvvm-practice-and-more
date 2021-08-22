@@ -3,11 +3,11 @@ package com.example.mvvm_practice.ui.storage.add
 import android.text.Editable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mvvm_practice.data.LocalUser
-import com.example.mvvm_practice.data.LocalUserRepository
+import com.example.mvvm_practice.repository.room.LocalUser
+import com.example.mvvm_practice.repository.Repository
 import kotlinx.coroutines.launch
 
-class AddLocalUserViewModel(private val repository: LocalUserRepository) : ViewModel() {
+class AddLocalUserViewModel(private val repository: Repository) : ViewModel() {
 
     val ageAutoCompleteTextViewItems = Array(106) { index -> index + 5 }
 

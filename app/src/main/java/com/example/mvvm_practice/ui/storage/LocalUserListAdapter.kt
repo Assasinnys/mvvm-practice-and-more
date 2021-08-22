@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_practice.R
-import com.example.mvvm_practice.data.LocalUser
+import com.example.mvvm_practice.repository.room.LocalUser
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class LocalUserListAdapter(private val onEditClickListener: (localUser: LocalUser) -> Unit) :

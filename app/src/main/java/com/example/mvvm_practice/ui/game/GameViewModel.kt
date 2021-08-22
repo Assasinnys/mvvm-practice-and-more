@@ -2,7 +2,7 @@ package com.example.mvvm_practice.ui.game
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.mvvm_practice.extra.Grid
+import com.example.mvvm_practice.extras.Grid
 import com.example.mvvm_practice.gameCore.Game
 import com.example.mvvm_practice.gameCore.GameData
 

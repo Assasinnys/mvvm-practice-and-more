@@ -10,10 +10,10 @@ import com.example.mvvm_practice.gameCore.GameData.GameCellState
 import com.example.mvvm_practice.gameCore.GameData.GameCell
 import com.example.mvvm_practice.gameCore.GameData.GameMode
 import com.example.mvvm_practice.gameCore.GameData.Player
-import com.example.mvvm_practice.extra.contains
-import com.example.mvvm_practice.extra.containsStartAt
+import com.example.mvvm_practice.extras.contains
+import com.example.mvvm_practice.extras.containsStartAt
 import com.example.mvvm_practice.gameCore.Game
-import com.example.mvvm_practice.extra.print
+import com.example.mvvm_practice.extras.print
 
 class GameBot(
     private val game: Game,

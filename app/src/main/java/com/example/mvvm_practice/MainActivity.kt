@@ -1,11 +1,10 @@
-package com.example.mvvm_practice.ui.main
+package com.example.mvvm_practice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
-import com.example.mvvm_practice.R
 import com.example.mvvm_practice.databinding.MainActivityBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

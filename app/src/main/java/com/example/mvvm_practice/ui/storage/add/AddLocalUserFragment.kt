@@ -11,7 +11,7 @@ import android.widget.AutoCompleteTextView
 import androidx.core.widget.addTextChangedListener
 import com.example.mvvm_practice.R
 import com.example.mvvm_practice.databinding.FragmentAddLocalUserBinding
-import com.example.mvvm_practice.extra.*
+import com.example.mvvm_practice.extras.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddLocalUserFragment : Fragment() {

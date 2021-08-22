@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.data
+package com.example.mvvm_practice.repository.room
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
