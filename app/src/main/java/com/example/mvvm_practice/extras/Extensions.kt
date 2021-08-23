@@ -2,10 +2,12 @@ package com.example.mvvm_practice.extras
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.example.mvvm_practice.R
 import com.example.mvvm_practice.gameCore.GameData
 
 fun Fragment.setPortraitOrientation() {
@@ -27,8 +29,19 @@ fun Fragment.getStandardStringPrefs(key: String, defValue: String) =
     activity?.getStandardStringPrefs(key, defValue)
 
 fun Activity.getStandardStringPrefs(key: String, defValue: String) =
+    getStandardPrefs()?.getString(key, defValue)
+
+fun Fragment.setStandardStringPrefs(key: String, value: String) =
+    activity?.setStandardStringPrefs(key, value)
+
+fun Activity.setStandardStringPrefs(key: String, value: String) =
+    with(getStandardPrefs()?.edit()) {
+        this?.putString(key, value)
+        this?.apply()
+    }
+
+fun Activity.getStandardPrefs(): SharedPreferences? =
     getSharedPreferences(applicationContext?.packageName + "_preferences", Context.MODE_PRIVATE)
-        ?.getString(key, defValue)
 
 fun Array<Array<GameData.GameCell>>.print() {
     val ansiGreen = "\u001B[32m"

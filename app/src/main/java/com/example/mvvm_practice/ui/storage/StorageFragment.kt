@@ -3,7 +3,8 @@ package com.example.mvvm_practice.ui.storage
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.TextView
+import androidx.annotation.MenuRes
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -13,7 +14,9 @@ import com.example.mvvm_practice.R
 import com.example.mvvm_practice.databinding.FragmentStorageBinding
 import com.example.mvvm_practice.extras.TAG
 import com.example.mvvm_practice.extras.getStandardStringPrefs
+import com.example.mvvm_practice.extras.setStandardStringPrefs
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.widget.*
 
 class StorageFragment : Fragment() {
     // The View Binding
@@ -22,6 +25,10 @@ class StorageFragment : Fragment() {
 
     // The View Model
     private val viewModel: StorageViewModel by viewModel()
+
+    // The RecyclerView Adapter
+    private var _adapter: LocalUserListAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +57,7 @@ class StorageFragment : Fragment() {
                 )
             }
         }
+        _adapter = adapter
 
         subscribeUi(adapter)
 
@@ -63,14 +71,18 @@ class StorageFragment : Fragment() {
 
     private fun subscribeUi(adapter: LocalUserListAdapter) {
         viewModel.allLocalUsers.observe(viewLifecycleOwner) {
-            val orderPreference = getStandardStringPrefs("order", "")
-            adapter.submitList(
-                viewModel.getOrderedAllLocalUsers(
-                    orderPreference?.toIntOrNull() ?: 0
-                )
-            )
-            Log.i(TAG, "subscribeUi: orderPref: $orderPreference")
+            updateList(adapter)
         }
+    }
+
+    private fun updateList(adapter: LocalUserListAdapter) {
+        val orderPreference = getStandardStringPrefs("order", "")
+        adapter.submitList(
+            viewModel.getOrderedAllLocalUsers(
+                orderPreference?.toIntOrNull() ?: 0
+            )
+        )
+        Log.i(TAG, "subscribeUi: orderPref: $orderPreference")
     }
 
     private fun deleteRecyclerViewItemCallback() =
@@ -114,10 +126,30 @@ class StorageFragment : Fragment() {
                 true
             }
             R.id.nav_filter_storage -> {
-                navController.navigate(R.id.action_nav_storage_to_storageSettingsFragment)
+                //navController.navigate(R.id.action_nav_storage_to_storageSettingsFragment)
+                val menuItemView = activity?.findViewById(item.itemId) as View
+                showMenu(R.menu.popup_menu_filter, menuItemView)
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showMenu(@MenuRes menuRes: Int, anchor: View) {
+        PopupMenu(requireContext(), anchor, Gravity.BOTTOM).apply {
+            menuInflater.inflate(menuRes, menu)
+
+            setOnMenuItemClickListener { menuItem: MenuItem ->
+                setStandardStringPrefs("order", menuItem.order.toString())
+                true
+                // Respond to menu item click.
+            }
+            setOnDismissListener {
+                updateList(adapter)
+                // Respond to popup being dismissed.
+            }
+            // Show the popup menu.
+            show()
         }
     }
 
@@ -125,5 +157,6 @@ class StorageFragment : Fragment() {
         super.onDestroyView()
         Log.i(TAG, "onDestroyView: storage")
         _binding = null
+        _adapter = null
     }
 }

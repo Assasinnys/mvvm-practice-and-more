@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ListPreference
-        app:entries="@array/order_entries"
-        app:entryValues="@array/order_values"
-        android:key="order"
-        app:useSimpleSummaryProvider="true"
-        android:summary="@array/order_values"
-        android:title="Order by" />
-</PreferenceScreen>
+<DropDownPreference android:key="order"
+    android:summary="@array/order_values"
+    android:title="Order by"
+    app:entries="@array/order_entries"
+    app:entryValues="@array/order_values"
+    app:useSimpleSummaryProvider="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" />
