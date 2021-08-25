@@ -10,14 +10,6 @@ import androidx.fragment.app.Fragment
 import com.example.mvvm_practice.R
 import com.example.mvvm_practice.gameCore.GameData
 
-fun Fragment.setPortraitOrientation() {
-    activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-}
-
-fun Fragment.resetOrientation() {
-    activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
-}
-
 fun Fragment.hideKeyboard() = view?.let { activity?.hideKeyboard(it) }
 
 fun Context.hideKeyboard(view: View) {

@@ -1,110 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="15dp"
-    tools:context=".ui.storage.add.AddLocalUserFragment">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldNickname"
+    <androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/input_nickname_hint"
-        app:errorEnabled="true"
-        app:counterEnabled="true"
-        app:counterMaxLength="50"
-        app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@+id/textFieldFirstName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
+        android:layout_centerVertical="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:textSize="20sp" />
+            android:padding="@dimen/big_padding"
+            tools:context=".ui.storage.add.AddLocalUserFragment">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldNickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_nickname_hint"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/storage_max_elements_count"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:layout_constraintBottom_toTopOf="@+id/textFieldFirstName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldFirstName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/input_first_name_hint"
-        app:counterEnabled="true"
-        app:counterMaxLength="50"
-        app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@+id/textFieldSecondName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldNickname">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="@integer/storage_max_elements_count"
+                    android:maxLines="1"
+                    android:textSize="@dimen/medium_text_size" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_first_name_hint"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/storage_max_elements_count"
+                app:endIconMode="clear_text"
+                app:layout_constraintBottom_toTopOf="@+id/textFieldSecondName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldNickname">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldSecondName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/input_second_name_hint"
-        app:counterEnabled="true"
-        app:counterMaxLength="50"
-        app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@+id/textFieldAge"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldFirstName"
-        tools:layout_editor_absoluteX="15dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="@integer/storage_max_elements_count"
+                    android:maxLines="1"
+                    android:textSize="@dimen/medium_text_size" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldSecondName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_second_name_hint"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/storage_max_elements_count"
+                app:endIconMode="clear_text"
+                app:layout_constraintBottom_toTopOf="@+id/textFieldAge"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldFirstName">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldAge"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/input_age_hint"
-        app:endIconMode="dropdown_menu"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_user"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldSecondName"
-        tools:layout_editor_absoluteX="15dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="@integer/storage_max_elements_count"
+                    android:maxLines="1"
+                    android:textSize="@dimen/medium_text_size" />
 
-        <AutoCompleteTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldAge"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_age_hint"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintBottom_toTopOf="@+id/button_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldSecondName">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_add_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/add_user_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldAge" />
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_add_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/add_user_button_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldAge" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

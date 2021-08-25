@@ -2,16 +2,18 @@ package com.example.mvvm_practice.ui.storage.add
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.example.mvvm_practice.R
 import com.example.mvvm_practice.databinding.FragmentAddLocalUserBinding
-import com.example.mvvm_practice.extras.*
+import com.example.mvvm_practice.extras.INVALID_VALUE
+import com.example.mvvm_practice.extras.TAG
+import com.example.mvvm_practice.extras.hideKeyboard
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddLocalUserFragment : Fragment() {
@@ -33,7 +35,6 @@ class AddLocalUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setPortraitOrientation()
         initInputFields()
         initAddUserButton()
 
@@ -111,6 +112,5 @@ class AddLocalUserFragment : Fragment() {
         super.onDestroyView()
         Log.i(TAG, "onDestroyView: add user")
         _binding = null
-        resetOrientation()
     }
 }

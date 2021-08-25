@@ -3,10 +3,12 @@ package com.example.mvvm_practice.ui.storage
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import androidx.annotation.MenuRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +17,12 @@ import com.example.mvvm_practice.databinding.FragmentStorageBinding
 import com.example.mvvm_practice.extras.TAG
 import com.example.mvvm_practice.extras.getStandardStringPrefs
 import com.example.mvvm_practice.extras.setStandardStringPrefs
+import com.example.mvvm_practice.repository.room.LocalUser
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.widget.*
 
 class StorageFragment : Fragment() {
     // The View Binding
@@ -70,12 +76,14 @@ class StorageFragment : Fragment() {
     }
 
     private fun subscribeUi(adapter: LocalUserListAdapter) {
-        viewModel.allLocalUsers.observe(viewLifecycleOwner) {
-            updateList(adapter)
-        }
+        viewModel.allLocalUsers.onEach(::updateList).launchIn(lifecycleScope)
+
+//        viewModel.allLocalUsers.observe(viewLifecycleOwner) {
+//            updateList(adapter)
+//        }
     }
 
-    private fun updateList(adapter: LocalUserListAdapter) {
+    private fun updateList(localUsers: List<LocalUser>) {
         val orderPreference = getStandardStringPrefs("order", "")
         adapter.submitList(
             viewModel.getOrderedAllLocalUsers(
@@ -145,7 +153,7 @@ class StorageFragment : Fragment() {
                 // Respond to menu item click.
             }
             setOnDismissListener {
-                updateList(adapter)
+                runBlocking { updateList(viewModel.allLocalUsers.first()) }
                 // Respond to popup being dismissed.
             }
             // Show the popup menu.

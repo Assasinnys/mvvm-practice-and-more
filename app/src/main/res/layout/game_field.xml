@@ -18,20 +18,20 @@
 
         <ImageButton
             android:id="@+id/first_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/second_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/third_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
     </LinearLayout>
@@ -44,20 +44,20 @@
 
         <ImageButton
             android:id="@+id/fourth_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/fifth_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/sixth_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
     </LinearLayout>
@@ -70,20 +70,20 @@
 
         <ImageButton
             android:id="@+id/seventh_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/eighth_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/ninth_cell"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/tic_tac_toe_cell_size"
+            android:layout_height="@dimen/tic_tac_toe_cell_size"
             android:scaleType="fitXY" />
     </LinearLayout>
 
