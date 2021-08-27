@@ -1,11 +1,13 @@
 package com.example.mvvm_practice.di
 
-import com.example.mvvm_practice.ui.storage.StorageViewModel
-import com.example.mvvm_practice.ui.storage.add.AddLocalUserViewModel
-import com.example.mvvm_practice.repository.Repository
-import com.example.mvvm_practice.repository.room.LocalUserDatabase
+import com.example.mvvm_practice.data.Repository
+import com.example.mvvm_practice.data.StoragePreferencesRepository
+import com.example.mvvm_practice.data.room.LocalUserDatabase
 import com.example.mvvm_practice.ui.about.AboutViewModel
+import com.example.mvvm_practice.ui.game.GameViewModel
+import com.example.mvvm_practice.ui.storage.StorageViewModel
 import com.example.mvvm_practice.ui.storage.about.AboutStorageViewModel
+import com.example.mvvm_practice.ui.storage.add.AddLocalUserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,8 +20,11 @@ val appModule = module {
     single { LocalUserDatabase.getDatabase(get(), get()) }
     // Repository
     single { Repository(get<LocalUserDatabase>().localUserDao()) }
+    // Preference DataStore for Storage
+    single { StoragePreferencesRepository.getInstance(get()) }
 
-    viewModel { StorageViewModel(get()) }
+    viewModel { GameViewModel() }
+    viewModel { StorageViewModel(get(), get()) }
     viewModel { AddLocalUserViewModel(get()) }
     viewModel { AboutViewModel(get()) }
     viewModel { AboutStorageViewModel(get()) }

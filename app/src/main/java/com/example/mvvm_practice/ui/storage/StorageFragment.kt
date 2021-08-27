@@ -8,20 +8,13 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_practice.R
+import com.example.mvvm_practice.data.room.LocalUser
 import com.example.mvvm_practice.databinding.FragmentStorageBinding
 import com.example.mvvm_practice.extras.TAG
-import com.example.mvvm_practice.extras.getStandardStringPrefs
-import com.example.mvvm_practice.extras.setStandardStringPrefs
-import com.example.mvvm_practice.repository.room.LocalUser
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StorageFragment : Fragment() {
@@ -30,11 +23,7 @@ class StorageFragment : Fragment() {
     private val binding get() = _binding!!
 
     // The View Model
-    private val viewModel: StorageViewModel by viewModel()
-
-    // The RecyclerView Adapter
-    private var _adapter: LocalUserListAdapter? = null
-    private val adapter get() = _adapter!!
+    private val viewModel by viewModel<StorageViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,37 +52,35 @@ class StorageFragment : Fragment() {
                 )
             }
         }
-        _adapter = adapter
 
         subscribeUi(adapter)
 
         binding.apply {
             recyclerview.apply {
                 this.adapter = adapter
-                deleteRecyclerViewItemCallback().attachToRecyclerView(this)
+                listItemDeleteCallback().attachToRecyclerView(this)
             }
         }
     }
 
     private fun subscribeUi(adapter: LocalUserListAdapter) {
-        viewModel.allLocalUsers.onEach(::updateList).launchIn(lifecycleScope)
+        viewModel.apply {
+            allLocalUsers.observe(viewLifecycleOwner) {
+                updateList(adapter, it)
+            }
 
-//        viewModel.allLocalUsers.observe(viewLifecycleOwner) {
-//            updateList(adapter)
-//        }
+            storageSortOrder.observe(viewLifecycleOwner) {
+                updateList(adapter, getOrderedAllLocalUsers(it.ordinal))
+            }
+        }
     }
 
-    private fun updateList(localUsers: List<LocalUser>) {
-        val orderPreference = getStandardStringPrefs("order", "")
-        adapter.submitList(
-            viewModel.getOrderedAllLocalUsers(
-                orderPreference?.toIntOrNull() ?: 0
-            )
-        )
-        Log.i(TAG, "subscribeUi: orderPref: $orderPreference")
+    private fun updateList(adapter: LocalUserListAdapter, localUsers: List<LocalUser>) {
+        adapter.submitList(localUsers)
+        Log.i(TAG, "updateList, newState: ${localUsers.joinToString(", ", "[", "]")}")
     }
 
-    private fun deleteRecyclerViewItemCallback() =
+    private fun listItemDeleteCallback() =
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -111,7 +98,7 @@ class StorageFragment : Fragment() {
                     viewHolder.itemView.findViewById<TextView>(R.id.user_id).text.toString()
                         .substringAfter("id: ").trim()
                         .toIntOrNull()
-                Log.i(TAG, "onSwiped: userId: $userId")
+                Log.i(TAG, "onDeleteItemSwiped: userId: $userId")
                 userId?.let {
                     viewModel.deleteById(userId)
                 }
@@ -148,12 +135,11 @@ class StorageFragment : Fragment() {
             menuInflater.inflate(menuRes, menu)
 
             setOnMenuItemClickListener { menuItem: MenuItem ->
-                setStandardStringPrefs("order", menuItem.order.toString())
+                viewModel.updateSortStateBySortId(menuItem.order)
                 true
                 // Respond to menu item click.
             }
             setOnDismissListener {
-                runBlocking { updateList(viewModel.allLocalUsers.first()) }
                 // Respond to popup being dismissed.
             }
             // Show the popup menu.
@@ -165,6 +151,5 @@ class StorageFragment : Fragment() {
         super.onDestroyView()
         Log.i(TAG, "onDestroyView: storage")
         _binding = null
-        _adapter = null
     }
 }

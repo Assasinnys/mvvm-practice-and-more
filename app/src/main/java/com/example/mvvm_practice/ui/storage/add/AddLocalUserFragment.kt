@@ -110,7 +110,7 @@ class AddLocalUserFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.i(TAG, "onDestroyView: add user")
+        Log.i(TAG, "onDestroyView: storage: add user")
         _binding = null
     }
 }

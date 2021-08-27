@@ -1,7 +1,8 @@
-package com.example.mvvm_practice.repository
+package com.example.mvvm_practice.data
 
-import com.example.mvvm_practice.repository.room.LocalUser
-import com.example.mvvm_practice.repository.room.LocalUserDao
+import androidx.annotation.WorkerThread
+import com.example.mvvm_practice.data.room.LocalUser
+import com.example.mvvm_practice.data.room.LocalUserDao
 import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
@@ -27,25 +28,19 @@ class Repository(private val localUserDao: LocalUserDao) {
     // off the main thread.
 
     //@Suppress("RedundantSuspendModifier")
-    //@WorkerThread
+    @WorkerThread
     suspend fun insert(localUser: LocalUser) {
         localUserDao.insert(localUser)
     }
-
-    //@Suppress("RedundantSuspendModifier")
-    //@WorkerThread
+    @WorkerThread
     suspend fun update(localUser: LocalUser) {
         localUserDao.updateLocalUser(localUser)
     }
-
-    //@Suppress("RedundantSuspendModifier")
-    //@WorkerThread
+    @WorkerThread
     suspend fun deleteById(id: Int) {
         localUserDao.deleteById(id)
     }
-
-    //@Suppress("RedundantSuspendModifier")
-    //@WorkerThread
+    @WorkerThread
     suspend fun delete(localUser: LocalUser) {
         localUserDao.delete(localUser)
     }

@@ -2,7 +2,7 @@ package com.example.mvvm_practice.extras
 
 import com.example.mvvm_practice.gameCore.GameData
 
-const val TAG = "APP"
+const val TAG = "MYAPP"
 
 const val INVALID_VALUE = -1
 

@@ -1,6 +1,8 @@
-package com.example.mvvm_practice.repository.room
+package com.example.mvvm_practice.data.room
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "local_user_table")
 data class LocalUser(

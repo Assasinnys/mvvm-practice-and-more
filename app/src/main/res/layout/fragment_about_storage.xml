@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.about.AboutFragment">
 
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/about_storage_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!--
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textview"
         android:layout_width="match_parent"
@@ -27,5 +22,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/text_preview" />
--->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
