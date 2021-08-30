@@ -77,6 +77,7 @@ class StorageFragment : Fragment() {
 
             storageDBMS.observe(viewLifecycleOwner) {
                 //TODO Switch DBMS
+                Log.i(TAG, "AAAAAAAAAA: ${it.name}")
                 toolbar?.title = resources.getString(R.string.storage_name, it.name)
             }
         }

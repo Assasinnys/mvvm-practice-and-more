@@ -18,8 +18,9 @@ class StoragePreferencesRepository private constructor(context: Context) {
     /**
      * Preferences. With value by default.
      */
-    private val _sortOrder = MutableLiveData(getEnumPreference(SortOrder.ID))
-    private val _dbms = MutableLiveData(getEnumPreference(DBMS.ROOM))
+    private val _sortOrder =
+        MutableLiveData(getEnumPreference(getPreference(SORT_ORDER_KEY, SortOrder.ID)))
+    private val _dbms = MutableLiveData(getEnumPreference(getPreference(DBMS_KEY, DBMS.ROOM)))
 
     val sortOrder = _sortOrder
     val dbms = _dbms

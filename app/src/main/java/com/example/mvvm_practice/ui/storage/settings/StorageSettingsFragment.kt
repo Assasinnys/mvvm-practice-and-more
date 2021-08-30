@@ -21,7 +21,7 @@ class StorageSettingsFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dbms = preferenceManager.findPreference<ListPreference>("dbms")
+        val dbms = preferenceManager.findPreference<ListPreference>("dbms_preference_fragment")
 
         dbms?.setOnPreferenceChangeListener { _, newValue ->
             Log.i("MYAPP", "NEW STORAGE PREFERENCE: $newValue")

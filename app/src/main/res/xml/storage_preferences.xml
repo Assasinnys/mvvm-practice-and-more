@@ -2,7 +2,7 @@
 <PreferenceScreen>
     <ListPreference xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:key="dbms"
+        android:key="dbms_preference_fragment"
         android:summary="@array/dbms_values"
         android:title="Database management system: "
         app:entries="@array/dbms_entries"

@@ -21,7 +21,7 @@ val appModule = module {
     single { LocalUserDatabase.getDatabase(get(), get()) }
     // Repository
     single { Repository(get<LocalUserDatabase>().localUserDao()) }
-    // Preference DataStore for Storage
+    // Preferences for Storage
     single { StoragePreferencesRepository.getInstance(get()) }
 
     viewModel { MainViewModel(get()) }
