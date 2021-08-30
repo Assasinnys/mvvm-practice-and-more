@@ -8,13 +8,18 @@
     <fragment
         android:id="@+id/nav_game"
         android:name="com.example.mvvm_practice.ui.game.GameFragment"
-        android:label="Tic-Tac-Toe"
+        android:label="@string/menu_item_game"
         tools:layout="@layout/fragment_game" />
+
     <fragment
         android:id="@+id/nav_storage"
         android:name="com.example.mvvm_practice.ui.storage.StorageFragment"
-        android:label="Storage"
+        android:label="{NAME}"
         tools:layout="@layout/fragment_storage">
+        <argument
+            android:name="NAME"
+            android:defaultValue="Storage"
+            app:argType="string" />
         <action
             android:id="@+id/action_nav_storage_to_addLocalUserFragment"
             app:destination="@id/nav_add_local_user" />

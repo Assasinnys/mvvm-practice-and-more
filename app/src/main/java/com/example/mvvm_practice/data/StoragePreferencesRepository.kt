@@ -1,65 +1,103 @@
-/*
- * Copyright 2020 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.mvvm_practice.data
 
 import android.content.Context
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
-
-private const val USER_PREFERENCES_NAME = "storage_preferences"
-private const val SORT_ORDER_KEY = "order"
-
-enum class SortOrder {
-    ID,
-    NICKNAME,
-    FIRST_NAME,
-    SECOND_NAME,
-    AGE
-}
+import androidx.preference.PreferenceManager
+import com.example.mvvm_practice.extras.TAG
 
 /**
  * Class that handles saving and retrieving user preferences
  */
 class StoragePreferencesRepository private constructor(context: Context) {
 
-    private val sharedPreferences =
-        context.applicationContext.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+    private val preferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
     /**
-     * Get the sort order. By default, sort order is ID.
+     * Preferences. With value by default.
      */
-    private val _sortOrder = MutableLiveData(getSortOrder())
+    private val _sortOrder = MutableLiveData(getEnumPreference(SortOrder.ID))
+    private val _dbms = MutableLiveData(getEnumPreference(DBMS.ROOM))
+
     val sortOrder = _sortOrder
+    val dbms = _dbms
 
-    private fun getSortOrder() = SortOrder.valueOf(
-        sharedPreferences.getString(SORT_ORDER_KEY, SortOrder.ID.name) ?: SortOrder.ID.name
-    )
-
-    private fun setSortOrder(newSortOrder: SortOrder) {
-        sharedPreferences.edit { putString(SORT_ORDER_KEY, newSortOrder.name) }
+    private inline fun <reified T : Enum<T>> getEnumPreference(
+        defaultValue: T
+    ): T = when (defaultValue) {
+        is SortOrder -> findSortOrderByName(getPreference(SORT_ORDER_KEY, SortOrder.ID.name)) as T
+        is DBMS -> findDBMSByName(getPreference(DBMS_KEY, DBMS.ROOM.name)) as T
+        else -> defaultValue
     }
 
-    fun updateSortState(newSortOrderId: Int) {
-        val newSortOrder = SortOrder.values()[newSortOrderId]
-        setSortOrder(newSortOrder)
-        _sortOrder.value = newSortOrder
+    fun updateSort(newSortOrderId: Int) {
+        if (newSortOrderId in SortOrder.values().indices) {
+            val newSortOrder = SortOrder.values()[newSortOrderId]
+            setPreference(SORT_ORDER_KEY, newSortOrder.name)
+            _sortOrder.value = newSortOrder
+        }
+    }
+
+    fun updateDbms(newDbmsId: Int) {
+        if (newDbmsId in DBMS.values().indices) {
+            val newDBMS = DBMS.values()[newDbmsId]
+            setPreference(DBMS_KEY, newDBMS.name)
+            _dbms.value = newDBMS
+        }
+    }
+
+    @Suppress("IMPLICIT_CAST_TO_ANY")
+    private inline fun <reified T : Any> getPreference(
+        key: String,
+        defaultValue: T
+    ): T = when (T::class) {
+        String::class -> {
+            val test = preferences.getString(key, defaultValue as String) ?: defaultValue
+            Log.i(TAG, "getPreference String: $test")
+            test
+        }
+        Int::class -> preferences.getInt(key, defaultValue as Int)
+        Boolean::class -> preferences.getBoolean(key, defaultValue as Boolean)
+        else -> defaultValue
+    } as T
+
+    private fun <T : Any> setPreference(
+        key: String,
+        value: T
+    ) {
+        when (value) {
+            is String -> preferences.edit { putString(key, value as String) }
+            is Int -> preferences.edit { putInt(key, value as Int) }
+            is Boolean -> preferences.edit { putBoolean(key, value as Boolean) }
+        }
     }
 
     companion object {
+        enum class SortOrder {
+            ID,
+            NICKNAME,
+            FIRST_NAME,
+            SECOND_NAME,
+            AGE
+        }
+
+        enum class DBMS {
+            ROOM,
+            CURSOR
+        }
+
+        fun findSortOrderByName(name: String): SortOrder =
+            SortOrder.values().find { it.name == name } ?: SortOrder.ID
+
+        fun findDBMSByName(name: String): DBMS =
+            DBMS.values().find { it.name == name } ?: DBMS.ROOM
+
+        //const val PREFERENCES_NAME = "storage_preferences"
+        const val SORT_ORDER_KEY = "order"
+        const val DBMS_KEY = "dbms"
+
         @Volatile
         private var INSTANCE: StoragePreferencesRepository? = null
 

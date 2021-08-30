@@ -2,6 +2,7 @@ package com.example.mvvm_practice
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,14 +21,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = MainActivityBinding.inflate(layoutInflater)
 
-        binding = MainActivityBinding.inflate(layoutInflater).apply {
+        binding.apply {
             setContentView(root)
-            setSupportActionBar(appContentMain.appBarMain.toolbar)
 
             val navHostFragment =
                 supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             val navController = navHostFragment.navController
+
+            setupActionBar(navController)
+        }
+    }
+
+    private fun setupActionBar(navController: NavController) {
+        binding.apply {
+            setSupportActionBar(appContentMain.appBarMain.toolbar)
 
             setupActionBarWithNavController(
                 navController, AppBarConfiguration(

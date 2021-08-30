@@ -2,12 +2,10 @@ package com.example.mvvm_practice.extras
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.pm.ActivityInfo
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.example.mvvm_practice.R
+import androidx.preference.PreferenceManager
 import com.example.mvvm_practice.gameCore.GameData
 
 fun Fragment.hideKeyboard() = view?.let { activity?.hideKeyboard(it) }
@@ -17,23 +15,30 @@ fun Context.hideKeyboard(view: View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun Fragment.getStandardStringPrefs(key: String, defValue: String) =
-    activity?.getStandardStringPrefs(key, defValue)
+inline fun <reified T : Any> Fragment.getFromStandardPrefs(key: String, defValue: T) =
+    activity?.getFromStandardPrefs(key, defValue) ?: defValue
 
-fun Activity.getStandardStringPrefs(key: String, defValue: String) =
-    getStandardPrefs()?.getString(key, defValue)
+inline fun <reified T> Fragment.putIntoStandardPrefs(key: String, value: T) {
+    activity?.putIntoStandardPrefs(key, value)
+}
 
-fun Fragment.setStandardStringPrefs(key: String, value: String) =
-    activity?.setStandardStringPrefs(key, value)
-
-fun Activity.setStandardStringPrefs(key: String, value: String) =
-    with(getStandardPrefs()?.edit()) {
-        this?.putString(key, value)
-        this?.apply()
+inline fun <reified T : Any> Activity.getFromStandardPrefs(key: String, defValue: T) =
+    when (T::class) {
+        String::class -> {
+            PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                ?.getString(key, defValue as String) ?: defValue
+        }
+        else -> defValue
     }
 
-fun Activity.getStandardPrefs(): SharedPreferences? =
-    getSharedPreferences(applicationContext?.packageName + "_preferences", Context.MODE_PRIVATE)
+inline fun <reified T> Activity.putIntoStandardPrefs(key: String, value: T) {
+    PreferenceManager.getDefaultSharedPreferences(applicationContext)?.edit()?.apply {
+        when (T::class) {
+            String::class -> putString(key, value as String)
+        }
+        apply()
+    }
+}
 
 fun Array<Array<GameData.GameCell>>.print() {
     val ansiGreen = "\u001B[32m"

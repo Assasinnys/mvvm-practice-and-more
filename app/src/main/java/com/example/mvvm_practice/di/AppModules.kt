@@ -1,5 +1,6 @@
 package com.example.mvvm_practice.di
 
+import com.example.mvvm_practice.MainViewModel
 import com.example.mvvm_practice.data.Repository
 import com.example.mvvm_practice.data.StoragePreferencesRepository
 import com.example.mvvm_practice.data.room.LocalUserDatabase
@@ -23,6 +24,7 @@ val appModule = module {
     // Preference DataStore for Storage
     single { StoragePreferencesRepository.getInstance(get()) }
 
+    viewModel { MainViewModel(get()) }
     viewModel { GameViewModel() }
     viewModel { StorageViewModel(get(), get()) }
     viewModel { AddLocalUserViewModel(get()) }

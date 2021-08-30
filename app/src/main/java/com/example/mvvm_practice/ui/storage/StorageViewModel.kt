@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.mvvm_practice.data.Repository
-import com.example.mvvm_practice.data.SortOrder
 import com.example.mvvm_practice.data.StoragePreferencesRepository
+import com.example.mvvm_practice.data.StoragePreferencesRepository.Companion.DBMS
+import com.example.mvvm_practice.data.StoragePreferencesRepository.Companion.SortOrder
 import com.example.mvvm_practice.data.room.LocalUser
 import com.example.mvvm_practice.extras.TAG
 import kotlinx.coroutines.flow.Flow
@@ -26,10 +27,18 @@ class StorageViewModel(
     // - Repository is completely separated from the UI through the ViewModel.
     val allLocalUsers: LiveData<List<LocalUser>> = repository.allLocalUsers.asLiveData()
 
+    /**
+     * Observable storage preferences
+     */
     val storageSortOrder: LiveData<SortOrder> = storagePreferencesRepository.sortOrder
+    val storageDBMS: LiveData<DBMS> = storagePreferencesRepository.dbms
 
-    fun updateSortStateBySortId(newSortOrderId: Int) {
-        storagePreferencesRepository.updateSortState(newSortOrderId)
+    fun updateSortStateById(newSortOrderId: Int) {
+        storagePreferencesRepository.updateSort(newSortOrderId)
+    }
+
+    fun updateDbmsPreferenceById(newDbmsId: Int) {
+        storagePreferencesRepository.updateDbms(newDbmsId)
     }
 
     fun getOrderedAllLocalUsers(idOfSort: Int): List<LocalUser> {
@@ -61,9 +70,6 @@ class StorageViewModel(
         return emptyList()
     }
 
-    /**
-     * Launching a new coroutine to manage the data in a non-blocking way
-     */
     fun deleteById(id: Int) = viewModelScope.launch {
         repository.deleteById(id)
     }

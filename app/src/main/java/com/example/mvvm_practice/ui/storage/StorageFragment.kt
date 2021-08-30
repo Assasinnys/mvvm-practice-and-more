@@ -72,12 +72,19 @@ class StorageFragment : Fragment() {
             storageSortOrder.observe(viewLifecycleOwner) {
                 updateList(adapter, getOrderedAllLocalUsers(it.ordinal))
             }
+
+            val toolbar = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+
+            storageDBMS.observe(viewLifecycleOwner) {
+                //TODO Switch DBMS
+                toolbar?.title = resources.getString(R.string.storage_name, it.name)
+            }
         }
     }
 
     private fun updateList(adapter: LocalUserListAdapter, localUsers: List<LocalUser>) {
         adapter.submitList(localUsers)
-        Log.i(TAG, "updateList, newState: ${localUsers.joinToString(", ", "[", "]")}")
+        Log.i(TAG, "updateList, " /* newState: ${localUsers.joinToString(", ", "[", "]")}" */)
     }
 
     private fun listItemDeleteCallback() =
@@ -126,6 +133,10 @@ class StorageFragment : Fragment() {
                 showMenu(R.menu.popup_menu_filter, menuItemView)
                 true
             }
+            R.id.nav_storage_settings -> {
+                navController.navigate(R.id.action_nav_storage_to_storageSettingsFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -135,7 +146,7 @@ class StorageFragment : Fragment() {
             menuInflater.inflate(menuRes, menu)
 
             setOnMenuItemClickListener { menuItem: MenuItem ->
-                viewModel.updateSortStateBySortId(menuItem.order)
+                viewModel.updateSortStateById(menuItem.order)
                 true
                 // Respond to menu item click.
             }

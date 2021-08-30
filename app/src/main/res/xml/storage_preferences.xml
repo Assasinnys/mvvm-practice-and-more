@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DropDownPreference android:key="order"
-    android:summary="@array/order_values"
-    android:title="Order by"
-    app:entries="@array/order_entries"
-    app:entryValues="@array/order_values"
-    app:useSimpleSummaryProvider="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" />
+<PreferenceScreen>
+    <ListPreference xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:key="dbms"
+        android:summary="@array/dbms_values"
+        android:title="Database management system: "
+        app:entries="@array/dbms_entries"
+        app:entryValues="@array/dbms_values"
+        app:useSimpleSummaryProvider="true" />
+</PreferenceScreen>
