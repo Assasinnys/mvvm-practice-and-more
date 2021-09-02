@@ -142,19 +142,16 @@ class StorageFragment : Fragment() {
         }
     }
 
+
     private fun showMenu(@MenuRes menuRes: Int, anchor: View) {
-        PopupMenu(requireContext(), anchor, Gravity.BOTTOM).apply {
-            menuInflater.inflate(menuRes, menu)
+        PopupMenu(requireContext(), anchor).apply {
+            inflate(menuRes)
 
             setOnMenuItemClickListener { menuItem: MenuItem ->
                 viewModel.updateSortStateById(menuItem.order)
                 true
-                // Respond to menu item click.
             }
-            setOnDismissListener {
-                // Respond to popup being dismissed.
-            }
-            // Show the popup menu.
+
             show()
         }
     }

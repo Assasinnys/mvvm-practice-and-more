@@ -7,5 +7,17 @@
         android:title="Database management system: "
         app:entries="@array/dbms_entries"
         app:entryValues="@array/dbms_values"
+        app:icon="@drawable/ic_outline_storage_24"
         app:useSimpleSummaryProvider="true" />
+
+    <ListPreference xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:key="order_direction_preference_fragment"
+        android:summary="@array/order_direction_values"
+        android:title="Sorting order: "
+        app:entries="@array/order_direction_entries"
+        app:entryValues="@array/order_direction_values"
+        app:icon="@drawable/ic_outline_filter_alt_24"
+        app:useSimpleSummaryProvider="true" />
+
 </PreferenceScreen>

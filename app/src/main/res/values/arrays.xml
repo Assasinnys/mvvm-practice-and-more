@@ -1,7 +1,5 @@
 <resources>
-    <!-- Root Preference -->
-
-    <!-- Storage Preference -->
+    <!-- Storage -->
     <string-array name="order_entries">
         <item>User Id</item>
         <item>Nickname</item>
@@ -17,11 +15,21 @@
         <item>4</item>
     </string-array>
 
+    <!-- Storage Preferences -->
     <string-array name="dbms_entries">
         <item>ROOM</item>
         <item>CURSOR</item>
     </string-array>
     <string-array name="dbms_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="order_direction_entries">
+        <item>ASCENDING</item>
+        <item>DESCENDING</item>
+    </string-array>
+    <string-array name="order_direction_values">
         <item>0</item>
         <item>1</item>
     </string-array>
