@@ -1,5 +1,6 @@
 package com.example.mvvm_practice.ui.storage.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,12 +19,19 @@ class StorageSettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.storage_preferences, rootKey)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        val toolbar = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        toolbar?.subtitle = ""
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val dbms = preferenceManager.findPreference<ListPreference>("dbms_preference_fragment")
 
-        dbms?.setOnPreferenceChangeListener { _, newValue ->
+        dbms?.setOnPreferenceChangeListener { preference, newValue ->
             Log.i("MYAPP", "NEW STORAGE PREFERENCE: $newValue")
             viewModel.updateDbmsPreferenceById(newValue.toString().toInt())
             true

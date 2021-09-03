@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardElevation="0dp"
+    android:layout_margin="@dimen/small_padding"
+    app:cardElevation="@dimen/medium_padding"
     app:strokeColor="?attr/colorOnSecondary"
-    app:strokeWidth="1dp">
+    app:cardCornerRadius="@dimen/medium_radius"
+    app:strokeWidth="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/extra_small_padding">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/edit_user"
@@ -32,7 +34,7 @@
                 android:id="@+id/user_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/extra_small_padding"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/nickname"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +48,7 @@
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/extra_small_padding"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/first_name"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +61,7 @@
                 android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/extra_small_padding"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/second_name"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +74,7 @@
                 android:id="@+id/second_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/extra_small_padding"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/age"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,8 +87,8 @@
                 android:id="@+id/age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_margin="@dimen/extra_small_padding"
+                android:layout_marginBottom="@dimen/extra_small_padding"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

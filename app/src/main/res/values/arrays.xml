@@ -17,8 +17,8 @@
 
     <!-- Storage Preferences -->
     <string-array name="dbms_entries">
-        <item>ROOM</item>
-        <item>CURSOR</item>
+        <item>Room</item>
+        <item>Cursor</item>
     </string-array>
     <string-array name="dbms_values">
         <item>0</item>

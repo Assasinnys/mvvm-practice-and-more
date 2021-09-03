@@ -16,6 +16,7 @@ import com.example.mvvm_practice.data.room.LocalUser
 import com.example.mvvm_practice.databinding.FragmentStorageBinding
 import com.example.mvvm_practice.extras.TAG
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class StorageFragment : Fragment() {
     // The View Binding
@@ -75,17 +76,19 @@ class StorageFragment : Fragment() {
 
             val toolbar = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
 
-            storageDBMS.observe(viewLifecycleOwner) {
+            storageDBMS.observe(viewLifecycleOwner) { dbms ->
                 //TODO Switch DBMS
-                Log.i(TAG, "AAAAAAAAAA: ${it.name}")
-                toolbar?.title = resources.getString(R.string.storage_name, it.name)
+                Log.i(TAG, "AAAAAAAAAA: ${dbms.name}")
+                //toolbar?.title = resources.getString(R.string.storage_name, it.name)
+                toolbar?.subtitle = dbms.name.lowercase()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             }
         }
     }
 
     private fun updateList(adapter: LocalUserListAdapter, localUsers: List<LocalUser>) {
         adapter.submitList(localUsers)
-        Log.i(TAG, "updateList, " /* newState: ${localUsers.joinToString(", ", "[", "]")}" */)
+        Log.i(TAG, "updateList")
     }
 
     private fun listItemDeleteCallback() =
@@ -129,8 +132,7 @@ class StorageFragment : Fragment() {
                 true
             }
             R.id.nav_filter_storage -> {
-                //navController.navigate(R.id.action_nav_storage_to_storageSettingsFragment)
-                val menuItemView = activity?.findViewById(item.itemId) as View
+                val menuItemView: View = activity?.findViewById(item.itemId) as View
                 showMenu(R.menu.popup_menu_filter, menuItemView)
                 true
             }
