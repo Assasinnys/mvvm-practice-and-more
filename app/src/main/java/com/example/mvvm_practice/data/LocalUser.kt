@@ -1,4 +1,4 @@
-package com.example.mvvm_practice.data.room
+package com.example.mvvm_practice.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,7 +12,12 @@ data class LocalUser(
     @ColumnInfo(name = "second_name") val secondName: String?,
     val age: Int?
 ) {
-    constructor(nickname: String, firstName: String?, secondName: String?, age: Int?) : this(
+    constructor(
+        nickname: String,
+        firstName: String? = null,
+        secondName: String? = null,
+        age: Int? = null
+    ) : this(
         0,
         nickname,
         firstName,

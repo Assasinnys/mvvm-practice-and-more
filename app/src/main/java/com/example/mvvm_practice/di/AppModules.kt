@@ -3,6 +3,7 @@ package com.example.mvvm_practice.di
 import com.example.mvvm_practice.MainViewModel
 import com.example.mvvm_practice.data.Repository
 import com.example.mvvm_practice.data.StoragePreferencesRepository
+import com.example.mvvm_practice.data.cursor.LocalUserCursorDatabase
 import com.example.mvvm_practice.data.room.LocalUserDatabase
 import com.example.mvvm_practice.ui.about.AboutViewModel
 import com.example.mvvm_practice.ui.game.GameViewModel
@@ -17,12 +18,20 @@ import org.koin.dsl.module
 val appModule = module {
     single { CoroutineScope(SupervisorJob()) }
 
-    // Database
+    // Room Database
     single { LocalUserDatabase.getDatabase(get(), get()) }
-    // Repository
-    single { Repository(get<LocalUserDatabase>().localUserDao()) }
+    // Cursor Database
+    single { LocalUserCursorDatabase.getDatabase(get()) }
     // Preferences for Storage
     single { StoragePreferencesRepository.getInstance(get()) }
+    // Repository
+    single {
+        Repository(
+            get<LocalUserDatabase>().localUserDao(),
+            get<LocalUserCursorDatabase>(),
+            get()
+        )
+    }
 
     viewModel { MainViewModel(get()) }
     viewModel { GameViewModel() }

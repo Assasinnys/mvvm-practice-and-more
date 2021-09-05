@@ -1,6 +1,7 @@
 package com.example.mvvm_practice.data.room
 
 import androidx.room.*
+import com.example.mvvm_practice.data.LocalUser
 import kotlinx.coroutines.flow.Flow
 
 @Dao

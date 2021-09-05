@@ -4,7 +4,7 @@ import android.text.Editable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mvvm_practice.data.Repository
-import com.example.mvvm_practice.data.room.LocalUser
+import com.example.mvvm_practice.data.LocalUser
 import kotlinx.coroutines.launch
 
 class AddLocalUserViewModel(private val repository: Repository) : ViewModel() {
@@ -50,6 +50,6 @@ class AddLocalUserViewModel(private val repository: Repository) : ViewModel() {
     }
 
     private fun update(localUser: LocalUser) = viewModelScope.launch {
-        repository.update(localUser)
+        repository.updateLocalUser(localUser)
     }
 }

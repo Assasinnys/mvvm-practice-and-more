@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_practice.R
-import com.example.mvvm_practice.data.room.LocalUser
+import com.example.mvvm_practice.data.LocalUser
 import com.example.mvvm_practice.databinding.FragmentStorageBinding
 import com.example.mvvm_practice.extras.TAG
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,8 +77,8 @@ class StorageFragment : Fragment() {
             val toolbar = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
 
             storageDBMS.observe(viewLifecycleOwner) { dbms ->
-                //TODO Switch DBMS
-                Log.i(TAG, "AAAAAAAAAA: ${dbms.name}")
+                //TODO on Switch DBMS
+                Log.i(TAG, "StorageFragment observe dbms: ${dbms.name}")
                 //toolbar?.title = resources.getString(R.string.storage_name, it.name)
                 toolbar?.subtitle = dbms.name.lowercase()
                     .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
@@ -88,8 +88,17 @@ class StorageFragment : Fragment() {
 
     private fun updateList(adapter: LocalUserListAdapter, localUsers: List<LocalUser>) {
         adapter.submitList(localUsers)
-        Log.i(TAG, "updateList")
+        Log.i(TAG, "updateList $localUsers")
     }
+
+//    private suspend fun notifyListChange(list: List<LocalUser>) {
+////        allLocalUsers = getDao().getLocalUsersASC()
+////        var list: List<LocalUser> = emptyList()
+////        allLocalUsers.collect {
+////            list = it
+////        }
+//        Log.i(TAG, "updateList LIST: $list")
+//    }
 
     private fun listItemDeleteCallback() =
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
@@ -162,5 +171,8 @@ class StorageFragment : Fragment() {
         super.onDestroyView()
         Log.i(TAG, "onDestroyView: storage")
         _binding = null
+
+        val toolbar = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        toolbar?.subtitle = ""
     }
 }

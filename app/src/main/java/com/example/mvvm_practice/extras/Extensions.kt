@@ -2,8 +2,12 @@ package com.example.mvvm_practice.extras
 
 import android.app.Activity
 import android.content.Context
+import android.database.Cursor
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.database.getIntOrNull
+import androidx.core.database.getStringOrNull
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.example.mvvm_practice.gameCore.GameData
@@ -38,6 +42,28 @@ inline fun <reified T> Activity.putIntoStandardPrefs(key: String, value: T) {
         }
         apply()
     }
+}
+
+fun Cursor.getStringValue(columnName: String): String? {
+    val columnIndex: Int
+    try {
+        columnIndex = getColumnIndexOrThrow(columnName)
+    } catch (ex: IllegalArgumentException) {
+        Log.e(TAG, "getColumnValue: ${ex.message + " " + ex.cause}}")
+        return null
+    }
+    return getStringOrNull(columnIndex)
+}
+
+fun Cursor.getIntValue(columnName: String): Int? {
+    val columnIndex: Int
+    try {
+        columnIndex = getColumnIndexOrThrow(columnName)
+    } catch (ex: IllegalArgumentException) {
+        Log.e(TAG, "getColumnValue: ${ex.message + " " + ex.cause}}")
+        return null
+    }
+    return getIntOrNull(columnIndex)
 }
 
 fun Array<Array<GameData.GameCell>>.print() {

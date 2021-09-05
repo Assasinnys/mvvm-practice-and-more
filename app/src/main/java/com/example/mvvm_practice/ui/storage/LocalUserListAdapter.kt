@@ -3,16 +3,19 @@ package com.example.mvvm_practice.ui.storage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CursorAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_practice.R
-import com.example.mvvm_practice.data.room.LocalUser
+import com.example.mvvm_practice.data.LocalUser
+import com.example.mvvm_practice.data.StoragePreferencesRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class LocalUserListAdapter(private val onEditClickListener: (localUser: LocalUser) -> Unit) :
-    ListAdapter<LocalUser, LocalUserListAdapter.LocalUserViewHolder>(LocalUsersComparator()) {
+class LocalUserListAdapter(
+    private val onEditClickListener: (localUser: LocalUser) -> Unit
+) : ListAdapter<LocalUser, LocalUserListAdapter.LocalUserViewHolder>(LocalUsersComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocalUserViewHolder {
         return LocalUserViewHolder.create(parent)
@@ -57,11 +60,18 @@ class LocalUserListAdapter(private val onEditClickListener: (localUser: LocalUse
 
     class LocalUsersComparator : DiffUtil.ItemCallback<LocalUser>() {
         override fun areItemsTheSame(oldItem: LocalUser, newItem: LocalUser): Boolean {
-            return oldItem === newItem
+            //return oldItem === newItem
+            return oldItem.nickname == newItem.nickname &&
+                    oldItem.firstName == newItem.firstName &&
+                    oldItem.secondName == newItem.secondName &&
+                    oldItem.age == newItem.age
         }
 
         override fun areContentsTheSame(oldItem: LocalUser, newItem: LocalUser): Boolean {
-            return oldItem.nickname == newItem.nickname && oldItem.firstName == newItem.firstName && oldItem.secondName == newItem.secondName && oldItem.age == newItem.age
+            return oldItem.nickname == newItem.nickname &&
+                    oldItem.firstName == newItem.firstName &&
+                    oldItem.secondName == newItem.secondName &&
+                    oldItem.age == newItem.age
         }
     }
 }

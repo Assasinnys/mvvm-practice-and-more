@@ -1,17 +1,54 @@
 package com.example.mvvm_practice.data
 
+import android.content.Context
+import android.util.Log
 import androidx.annotation.WorkerThread
-import com.example.mvvm_practice.data.room.LocalUser
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import com.example.mvvm_practice.data.cursor.LocalUserCursorDatabase
 import com.example.mvvm_practice.data.room.LocalUserDao
-import kotlinx.coroutines.flow.Flow
+import com.example.mvvm_practice.extras.TAG
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
-class Repository(private val localUserDao: LocalUserDao) {
+class Repository(
+    private val localUserDaoRoom: LocalUserDao,
+    private val localUserCursorDatabase: LocalUserDao,
+    private val context: Context
+) {
+    private val storagePreferencesRepository = StoragePreferencesRepository.getInstance(context)
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    val allLocalUsers: Flow<List<LocalUser>> = localUserDao.getLocalUsersASC()
+    var allLocalUsers: LiveData<List<LocalUser>> = getDao().getLocalUsersASC().asLiveData(Dispatchers.IO)
+
+    private fun getDao(): LocalUserDao {
+        return when (storagePreferencesRepository.dbms.value) {
+            StoragePreferencesRepository.Companion.DBMS.CURSOR -> {
+                Log.i(TAG, "getDao: CURSOR")
+                localUserCursorDatabase
+            }
+            StoragePreferencesRepository.Companion.DBMS.ROOM -> {
+                Log.i(TAG, "getDao: ROOM")
+                localUserDaoRoom
+            }
+            else -> localUserCursorDatabase
+        }
+    }
+
+    private suspend fun notifyListChange() {
+//        allLocalUsers = getDao().getLocalUsersASC()
+//        var list: List<LocalUser> = emptyList()
+//        allLocalUsers.collect {
+//            list = it
+//        }
+        Log.i(TAG, "notifyListChange LIST: ${allLocalUsers.value?.last()}")
+    }
 
     fun getTextAboutApp() =
         "Негласное правило: \"в прилаге зачастую и инет и бд. и получается RemoteUser (инет), User (ui), LocalUser (DB)\"\n" +
@@ -30,18 +67,26 @@ class Repository(private val localUserDao: LocalUserDao) {
     //@Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(localUser: LocalUser) {
-        localUserDao.insert(localUser)
+        getDao().insert(localUser)
+        notifyListChange()
     }
+
     @WorkerThread
-    suspend fun update(localUser: LocalUser) {
-        localUserDao.updateLocalUser(localUser)
+    suspend fun updateLocalUser(localUser: LocalUser) {
+        getDao().updateLocalUser(localUser)
+        notifyListChange()
     }
+
     @WorkerThread
     suspend fun deleteById(id: Int) {
-        localUserDao.deleteById(id)
+        getDao().deleteById(id)
+        notifyListChange()
     }
+
     @WorkerThread
     suspend fun delete(localUser: LocalUser) {
-        localUserDao.delete(localUser)
+        getDao().delete(localUser)
+        notifyListChange()
     }
 }
+

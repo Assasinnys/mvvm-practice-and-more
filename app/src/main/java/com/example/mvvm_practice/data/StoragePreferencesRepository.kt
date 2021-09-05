@@ -8,7 +8,7 @@ import androidx.preference.PreferenceManager
 import com.example.mvvm_practice.extras.TAG
 
 /**
- * Class that handles saving and retrieving user preferences
+ * Class that handles saving and retrieving storage preferences
  */
 class StoragePreferencesRepository private constructor(context: Context) {
 
@@ -37,7 +37,9 @@ class StoragePreferencesRepository private constructor(context: Context) {
         if (newSortOrderId in SortOrder.values().indices) {
             val newSortOrder = SortOrder.values()[newSortOrderId]
             setPreference(SORT_ORDER_KEY, newSortOrder.name)
-            _sortOrder.value = newSortOrder
+            if (_sortOrder.value != newSortOrder) {
+                _sortOrder.value = newSortOrder
+            }
         }
     }
 
@@ -45,7 +47,9 @@ class StoragePreferencesRepository private constructor(context: Context) {
         if (newDbmsId in DBMS.values().indices) {
             val newDBMS = DBMS.values()[newDbmsId]
             setPreference(DBMS_KEY, newDBMS.name)
-            _dbms.value = newDBMS
+            if (_dbms.value != newDBMS) {
+                _dbms.value = newDBMS
+            }
         }
     }
 
