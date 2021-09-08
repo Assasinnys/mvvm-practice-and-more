@@ -3,16 +3,13 @@ package com.example.mvvm_practice.data
 import android.content.Context
 import android.util.Log
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.asFlow
 import com.example.mvvm_practice.data.cursor.LocalUserCursorDatabase
 import com.example.mvvm_practice.data.room.LocalUserDao
 import com.example.mvvm_practice.extras.TAG
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
@@ -21,33 +18,55 @@ class Repository(
     private val localUserCursorDatabase: LocalUserDao,
     private val context: Context
 ) {
-    private val storagePreferencesRepository = StoragePreferencesRepository.getInstance(context)
+    private val storagePreferencesRepository =
+        StoragePreferencesRepository.getInstance(context.applicationContext)
+
+    private val daoFlow = MutableSharedFlow<LocalUserDao>(replay = 1).shareIn(
+        scope = CoroutineScope(Dispatchers.IO),
+        started = SharingStarted.WhileSubscribed(5000L),
+        replay = 1
+    ).onSubscription {
+        storagePreferencesRepository.dbms.asFlow().collect {
+            emit(
+                when (it) {
+                    StoragePreferencesRepository.Companion.DBMS.CURSOR -> {
+                        Log.e(TAG, "onSubscription: CURSOR")
+                        (localUserCursorDatabase as LocalUserCursorDatabase).updateDbState()
+                        localUserCursorDatabase
+                    }
+                    StoragePreferencesRepository.Companion.DBMS.ROOM -> {
+                        Log.e(TAG, "onSubscription: ROOM")
+                        localUserDaoRoom
+                    }
+                    //else -> localUserCursorDatabase
+                }
+            )
+        }
+    }
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    var allLocalUsers: LiveData<List<LocalUser>> = getDao().getLocalUsersASC().asLiveData(Dispatchers.IO)
+    var allLocalUsers: Flow<List<LocalUser>> = daoFlow.flatMapLatest(LocalUserDao::getLocalUsersASC)
 
     private fun getDao(): LocalUserDao {
         return when (storagePreferencesRepository.dbms.value) {
             StoragePreferencesRepository.Companion.DBMS.CURSOR -> {
-                Log.i(TAG, "getDao: CURSOR")
+                Log.e(TAG, "getDao: CURSOR")
+                //allLocalUsers = localUserCursorDatabase.getLocalUsersASC()
                 localUserCursorDatabase
             }
             StoragePreferencesRepository.Companion.DBMS.ROOM -> {
-                Log.i(TAG, "getDao: ROOM")
+                Log.e(TAG, "getDao: ROOM")
+                //allLocalUsers = localUserDaoRoom.getLocalUsersASC()
                 localUserDaoRoom
             }
             else -> localUserCursorDatabase
         }
+
     }
 
-    private suspend fun notifyListChange() {
-//        allLocalUsers = getDao().getLocalUsersASC()
-//        var list: List<LocalUser> = emptyList()
-//        allLocalUsers.collect {
-//            list = it
-//        }
-        Log.i(TAG, "notifyListChange LIST: ${allLocalUsers.value?.last()}")
+    private fun notifyListChange() {
+        Log.e(TAG, "REPOSITORY METHOD CALL")
     }
 
     fun getTextAboutApp() =
@@ -60,9 +79,9 @@ class Repository(
                 "My completed task & more: https://github.com/Belarussianin/mvvm-practice-and-more" +
                 "\nIn the top app bar buttons: settings, add user.\nSwipe left or right to delete item\nThank you for your attention."
 
-    // By default Room runs suspend queries off the main thread, therefore, we don't need to
-    // implement anything else to ensure we're not doing long running database work
-    // off the main thread.
+// By default Room runs suspend queries off the main thread, therefore, we don't need to
+// implement anything else to ensure we're not doing long running database work
+// off the main thread.
 
     //@Suppress("RedundantSuspendModifier")
     @WorkerThread

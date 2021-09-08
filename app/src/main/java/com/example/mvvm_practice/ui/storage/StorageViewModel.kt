@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.mvvm_practice.data.LocalUser
 import com.example.mvvm_practice.data.Repository
 import com.example.mvvm_practice.data.StoragePreferencesRepository
 import com.example.mvvm_practice.data.StoragePreferencesRepository.Companion.DBMS
 import com.example.mvvm_practice.data.StoragePreferencesRepository.Companion.SortOrder
-import com.example.mvvm_practice.data.LocalUser
 import com.example.mvvm_practice.extras.TAG
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +25,7 @@ class StorageViewModel(
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    val allLocalUsers: LiveData<List<LocalUser>> = repository.allLocalUsers//.asLiveData()
+    val allLocalUsers: LiveData<List<LocalUser>> = repository.allLocalUsers.asLiveData()
 
     /**
      * Observable storage preferences

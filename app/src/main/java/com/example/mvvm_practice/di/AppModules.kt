@@ -21,7 +21,7 @@ val appModule = module {
     // Room Database
     single { LocalUserDatabase.getDatabase(get(), get()) }
     // Cursor Database
-    single { LocalUserCursorDatabase.getDatabase(get()) }
+    single { LocalUserCursorDatabase.getDatabase(get(), get()) }
     // Preferences for Storage
     single { StoragePreferencesRepository.getInstance(get()) }
     // Repository

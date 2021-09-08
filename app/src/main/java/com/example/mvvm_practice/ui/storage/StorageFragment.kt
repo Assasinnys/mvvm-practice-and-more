@@ -35,6 +35,7 @@ class StorageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)?.visibility = GONE
         setHasOptionsMenu(true)
 
         val navController = findNavController()
@@ -67,6 +68,7 @@ class StorageFragment : Fragment() {
     private fun subscribeUi(adapter: LocalUserListAdapter) {
         viewModel.apply {
             allLocalUsers.observe(viewLifecycleOwner) {
+                Log.w(TAG, "allLocalUsers observer")
                 updateList(adapter, it)
             }
 
@@ -88,7 +90,7 @@ class StorageFragment : Fragment() {
 
     private fun updateList(adapter: LocalUserListAdapter, localUsers: List<LocalUser>) {
         adapter.submitList(localUsers)
-        Log.i(TAG, "updateList $localUsers")
+        Log.i(TAG, "updateList")
     }
 
 //    private suspend fun notifyListChange(list: List<LocalUser>) {
@@ -124,7 +126,7 @@ class StorageFragment : Fragment() {
                 }
             }
         })
-
+    
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.navigation_storage, menu)
     }
@@ -174,5 +176,11 @@ class StorageFragment : Fragment() {
 
         val toolbar = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         toolbar?.subtitle = ""
+        this.onDestroy()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy: ")
     }
 }
