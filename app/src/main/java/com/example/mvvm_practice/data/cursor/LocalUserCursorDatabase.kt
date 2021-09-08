@@ -40,10 +40,10 @@ class LocalUserCursorDatabase(context: Context, private val scope: CoroutineScop
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        if (oldVersion != newVersion) {
+        //if (oldVersion != newVersion) {
             db.execSQL(SQL_DELETE_ENTRIES)
             onCreate(db)
-        }
+        //}
     }
 
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -258,10 +258,11 @@ class LocalUserCursorDatabase(context: Context, private val scope: CoroutineScop
         private const val COLUMN_NAME_SECOND_NAME = "second_name"
         private const val COLUMN_NAME_AGE = "age"
 
+        //"$COLUMN_NAME_ID INTEGER PRIMARY KEY," +
         private const val SQL_CREATE_ENTRIES =
             "CREATE TABLE $TABLE_NAME (" +
-                    "$COLUMN_NAME_ID INTEGER PRIMARY KEY," +
-                    "$COLUMN_NAME_NICKNAME TEXT," +
+                    "$COLUMN_NAME_ID INTEGER PRIMARY KEY NOT NULL," +
+                    "$COLUMN_NAME_NICKNAME TEXT NOT NULL," +
                     "$COLUMN_NAME_FIRST_NAME TEXT," +
                     "$COLUMN_NAME_SECOND_NAME TEXT," +
                     "$COLUMN_NAME_AGE INTEGER)"
