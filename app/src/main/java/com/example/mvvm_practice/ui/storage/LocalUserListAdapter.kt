@@ -3,14 +3,12 @@ package com.example.mvvm_practice.ui.storage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CursorAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_practice.R
 import com.example.mvvm_practice.data.LocalUser
-import com.example.mvvm_practice.data.StoragePreferencesRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class LocalUserListAdapter(
@@ -60,18 +58,19 @@ class LocalUserListAdapter(
 
     class LocalUsersComparator : DiffUtil.ItemCallback<LocalUser>() {
         override fun areItemsTheSame(oldItem: LocalUser, newItem: LocalUser): Boolean {
-            //return oldItem === newItem
-            return oldItem.nickname == newItem.nickname &&
-                    oldItem.firstName == newItem.firstName &&
-                    oldItem.secondName == newItem.secondName &&
-                    oldItem.age == newItem.age
+            return oldItem === newItem
+//            return oldItem.nickname == newItem.nickname &&
+//                    oldItem.firstName == newItem.firstName &&
+//                    oldItem.secondName == newItem.secondName &&
+//                    oldItem.age == newItem.age
         }
 
         override fun areContentsTheSame(oldItem: LocalUser, newItem: LocalUser): Boolean {
-            return oldItem.nickname == newItem.nickname &&
-                    oldItem.firstName == newItem.firstName &&
-                    oldItem.secondName == newItem.secondName &&
-                    oldItem.age == newItem.age
+            return oldItem == newItem
+//            return oldItem.nickname == newItem.nickname &&
+//                    oldItem.firstName == newItem.firstName &&
+//                    oldItem.secondName == newItem.secondName &&
+//                    oldItem.age == newItem.age
         }
     }
 }
