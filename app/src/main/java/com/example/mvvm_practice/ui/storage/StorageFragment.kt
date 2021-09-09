@@ -67,19 +67,17 @@ class StorageFragment : Fragment() {
 
     private fun subscribeUi(adapter: LocalUserListAdapter) {
         viewModel.apply {
-            allLocalUsers.observe(viewLifecycleOwner) {
-                Log.w(TAG, "allLocalUsers observer")
-                updateList(adapter, it)
+            storageSortOrder.observe(viewLifecycleOwner) {
+                updateList(adapter, getOrderedAllLocalUsers(idOfSort = it.ordinal))
             }
 
-            storageSortOrder.observe(viewLifecycleOwner) {
-                updateList(adapter, getOrderedAllLocalUsers(it.ordinal))
+            allLocalUsers.observe(viewLifecycleOwner) {
+                updateList(adapter, getOrderedAllLocalUsers(allLocalUserList = it))
             }
 
             val toolbar = activity?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
 
             storageDBMS.observe(viewLifecycleOwner) { dbms ->
-                //TODO on Switch DBMS
                 Log.i(TAG, "StorageFragment observe dbms: ${dbms.name}")
                 //toolbar?.title = resources.getString(R.string.storage_name, it.name)
                 toolbar?.subtitle = dbms.name.lowercase()
@@ -89,18 +87,11 @@ class StorageFragment : Fragment() {
     }
 
     private fun updateList(adapter: LocalUserListAdapter, localUsers: List<LocalUser>) {
-        adapter.submitList(localUsers)
-        Log.i(TAG, "updateList")
+        if (adapter.currentList != localUsers) {
+            adapter.submitList(localUsers)
+            Log.i(TAG, "updateList")
+        }
     }
-
-//    private suspend fun notifyListChange(list: List<LocalUser>) {
-////        allLocalUsers = getDao().getLocalUsersASC()
-////        var list: List<LocalUser> = emptyList()
-////        allLocalUsers.collect {
-////            list = it
-////        }
-//        Log.i(TAG, "updateList LIST: $list")
-//    }
 
     private fun listItemDeleteCallback() =
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
@@ -126,7 +117,7 @@ class StorageFragment : Fragment() {
                 }
             }
         })
-    
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.navigation_storage, menu)
     }

@@ -35,7 +35,7 @@ val appModule = module {
 
     viewModel { MainViewModel(get()) }
     viewModel { GameViewModel() }
-    viewModel { StorageViewModel(get(), get()) }
+    viewModel { StorageViewModel(get()) }
     viewModel { AddLocalUserViewModel(get()) }
     viewModel { AboutViewModel(get()) }
     viewModel { AboutStorageViewModel(get()) }

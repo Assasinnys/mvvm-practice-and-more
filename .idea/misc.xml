@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/drawable/ic_baseline_sort_24.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout-v24/main_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout-v26/fragment_about.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MVVM_Practice/app/src/main/res/layout-v28/recyclerview_item.xml" value="0.36666666666666664" />

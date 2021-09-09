@@ -15,9 +15,6 @@ class StoragePreferencesRepository private constructor(context: Context) {
     private val preferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 
-    /**
-     * Preferences. With value by default.
-     */
     private val _sortOrder =
         MutableLiveData(getEnumPreference(getPreference(SORT_ORDER_KEY, SortOrder.ID)))
     private val _dbms = MutableLiveData(getEnumPreference(getPreference(DBMS_KEY, DBMS.ROOM)))
@@ -28,8 +25,8 @@ class StoragePreferencesRepository private constructor(context: Context) {
     private inline fun <reified T : Enum<T>> getEnumPreference(
         defaultValue: T
     ): T = when (defaultValue) {
-        is SortOrder -> findSortOrderByName(getPreference(SORT_ORDER_KEY, SortOrder.ID.name)) as T
-        is DBMS -> findDBMSByName(getPreference(DBMS_KEY, DBMS.ROOM.name)) as T
+        is SortOrder -> getSortOrderByName(getPreference(SORT_ORDER_KEY, SortOrder.ID.name)) as T
+        is DBMS -> getDBMSByName(getPreference(DBMS_KEY, DBMS.ROOM.name)) as T
         else -> defaultValue
     }
 
@@ -93,10 +90,10 @@ class StoragePreferencesRepository private constructor(context: Context) {
             CURSOR
         }
 
-        fun findSortOrderByName(name: String): SortOrder =
+        fun getSortOrderByName(name: String): SortOrder =
             SortOrder.values().find { it.name == name } ?: SortOrder.ID
 
-        fun findDBMSByName(name: String): DBMS =
+        fun getDBMSByName(name: String): DBMS =
             DBMS.values().find { it.name == name } ?: DBMS.ROOM
 
         //const val PREFERENCES_NAME = "storage_preferences"

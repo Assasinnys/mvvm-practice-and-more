@@ -5,12 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.mvvm_practice.data.DATABASE_NAME
+import com.example.mvvm_practice.data.DATABASE_VERSION
 import com.example.mvvm_practice.data.LocalUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the LocalUser class
-@Database(entities = [LocalUser::class], version = 2, exportSchema = false)
+@Database(entities = [LocalUser::class], version = DATABASE_VERSION, exportSchema = false)
 abstract class LocalUserDatabase : RoomDatabase() {
 
     abstract fun localUserDao(): LocalUserDao
@@ -29,7 +31,7 @@ abstract class LocalUserDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     LocalUserDatabase::class.java,
-                    "user_database"
+                    DATABASE_NAME
                 )
                     .addCallback(LocalUserDatabaseCallback(scope))
                     .fallbackToDestructiveMigration()
@@ -65,52 +67,68 @@ abstract class LocalUserDatabase : RoomDatabase() {
                 //localUserDao.deleteAll()
 
                 // Add sample users.
-                var localUser = LocalUser(
-                    nickname = "Assasinnys(Dmitry)",
-                    firstName = "Dmitry",
-                    secondName = "Androider",
-                    age = 228
-                )
-                localUserDao.insert(localUser)
-                localUser = LocalUser(
-                    nickname = "AlexKray",
-                    firstName = "Alex",
-                    secondName = "Androider",
-                    age = 227
-                )
-                localUserDao.insert(localUser)
-                localUser = LocalUser(
-                    nickname = "Belarussianin",
-                    firstName = "Arseni",
-                    secondName = "Kasheuski",
-                    age = 226
-                )
-                localUserDao.insert(localUser)
-                localUser = LocalUser(
-                    nickname = "Bor9",
-                    firstName = "Alex",
-                    secondName = "Androider",
-                    age = 225
-                )
-                localUserDao.insert(localUser)
-                localUser = LocalUser(
-                    nickname = "Gen0ciD",
-                    firstName = "sql",
-                    secondName = "pointer",
-                    age = 224
-                )
-                localUserDao.insert(localUser)
-                localUser = LocalUser(
-                    nickname = "devlee",
-                    firstName = "Kazahstanos",
-                    secondName = "Seniorovich",
-                    age = 32
-                )
-                localUserDao.insert(localUser)
-
-                // TODO: Add users!
+                getSampleUserList().forEach {
+                    localUserDao.insert(it)
+                }
             }
         }
 
+        fun getSampleUserList(): List<LocalUser> {
+            val localUsersSampleList: MutableList<LocalUser> =
+                emptyList<LocalUser>().toMutableList()
+
+            localUsersSampleList.apply {
+                add(
+                    LocalUser(
+                        nickname = "Assasinnys(Dmitry)",
+                        firstName = "Dmitry",
+                        secondName = "Androider",
+                        age = 228
+                    )
+                )
+                add(
+                    LocalUser(
+                        nickname = "AlexKray",
+                        firstName = "Alex",
+                        secondName = "Androider",
+                        age = 227
+                    )
+                )
+                add(
+                    LocalUser(
+                        nickname = "Belarussianin",
+                        firstName = "Arseni",
+                        secondName = "Kasheuski",
+                        age = 226
+                    )
+                )
+                add(
+                    LocalUser(
+                        nickname = "Bor9",
+                        firstName = "Alex",
+                        secondName = "Androider",
+                        age = 225
+                    )
+                )
+                add(
+                    LocalUser(
+                        nickname = "Gen0ciD",
+                        firstName = "sql",
+                        secondName = "pointer",
+                        age = 224
+                    )
+                )
+                add(
+                    LocalUser(
+                        nickname = "devlee",
+                        firstName = "Kazahstanos",
+                        secondName = "Seniorovich",
+                        age = 32
+                    )
+                )
+            }
+
+            return localUsersSampleList
+        }
     }
 }

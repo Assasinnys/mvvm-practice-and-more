@@ -17,7 +17,7 @@
         android:title="Sorting order: "
         app:entries="@array/order_direction_entries"
         app:entryValues="@array/order_direction_values"
-        app:icon="@drawable/ic_outline_filter_alt_24"
+        app:icon="@drawable/ic_baseline_sort_24"
         app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

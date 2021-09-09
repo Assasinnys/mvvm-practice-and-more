@@ -1,6 +1,5 @@
 package com.example.mvvm_practice.data
 
-import android.content.Context
 import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.asFlow
@@ -16,11 +15,8 @@ import kotlinx.coroutines.flow.*
 class Repository(
     private val localUserDaoRoom: LocalUserDao,
     private val localUserCursorDatabase: LocalUserDao,
-    private val context: Context
+    val storagePreferencesRepository: StoragePreferencesRepository
 ) {
-    private val storagePreferencesRepository =
-        StoragePreferencesRepository.getInstance(context.applicationContext)
-
     private val daoFlow = MutableSharedFlow<LocalUserDao>(replay = 1).shareIn(
         scope = CoroutineScope(Dispatchers.IO),
         started = SharingStarted.WhileSubscribed(5000L),
@@ -31,6 +27,7 @@ class Repository(
                 when (it) {
                     StoragePreferencesRepository.Companion.DBMS.CURSOR -> {
                         Log.e(TAG, "onSubscription: CURSOR")
+                        //Fetch data from db to the internal livedata.
                         (localUserCursorDatabase as LocalUserCursorDatabase).updateDbState()
                         localUserCursorDatabase
                     }
@@ -38,7 +35,10 @@ class Repository(
                         Log.e(TAG, "onSubscription: ROOM")
                         localUserDaoRoom
                     }
-                    //else -> localUserCursorDatabase
+                    else -> {
+                        Log.e(TAG, "ELSE onSubscription: ROOM ")
+                        localUserDaoRoom
+                    }
                 }
             )
         }
@@ -51,13 +51,11 @@ class Repository(
     private fun getDao(): LocalUserDao {
         return when (storagePreferencesRepository.dbms.value) {
             StoragePreferencesRepository.Companion.DBMS.CURSOR -> {
-                Log.e(TAG, "getDao: CURSOR")
-                //allLocalUsers = localUserCursorDatabase.getLocalUsersASC()
+                Log.w(TAG, "getDao: CURSOR")
                 localUserCursorDatabase
             }
             StoragePreferencesRepository.Companion.DBMS.ROOM -> {
-                Log.e(TAG, "getDao: ROOM")
-                //allLocalUsers = localUserDaoRoom.getLocalUsersASC()
+                Log.w(TAG, "getDao: ROOM")
                 localUserDaoRoom
             }
             else -> localUserCursorDatabase
@@ -66,7 +64,7 @@ class Repository(
     }
 
     private fun notifyListChange() {
-        Log.e(TAG, "REPOSITORY METHOD CALL")
+        Log.e(TAG, "REPOSITORY DB METHOD CALL")
     }
 
     fun getTextAboutApp() =
@@ -79,11 +77,9 @@ class Repository(
                 "My completed task & more: https://github.com/Belarussianin/mvvm-practice-and-more" +
                 "\nIn the top app bar buttons: settings, add user.\nSwipe left or right to delete item\nThank you for your attention."
 
-// By default Room runs suspend queries off the main thread, therefore, we don't need to
-// implement anything else to ensure we're not doing long running database work
-// off the main thread.
-
-    //@Suppress("RedundantSuspendModifier")
+    // By default Room runs suspend queries off the main thread, therefore, we don't need to
+    // implement anything else to ensure we're not doing long running database work
+    // off the main thread.
     @WorkerThread
     suspend fun insert(localUser: LocalUser) {
         getDao().insert(localUser)

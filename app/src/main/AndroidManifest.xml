@@ -15,7 +15,7 @@
         <activity
             android:name="com.example.mvvm_practice.MainActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="unspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
