@@ -62,6 +62,7 @@ class GameFragment : Fragment() {
         cells.forEachIndexed { index, button ->
             button.setOnClickListener {
                 viewModel.makeMove(index)
+                viewModel.gameBot.makeMove()
             }
         }
 

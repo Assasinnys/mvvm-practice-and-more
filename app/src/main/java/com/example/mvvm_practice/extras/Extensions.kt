@@ -67,27 +67,27 @@ fun Cursor.getIntValue(columnName: String): Int? {
 }
 
 fun Array<Array<GameData.GameCell>>.print() {
-    val ansiGreen = "\u001B[32m"
-    val ansiRed = "\u001B[31m"
-    val ansiResetColor = "\u001B[0m"
+    //val ansiGreen = "\u001B[32m"
+    //val ansiRed = "\u001B[31m"
+    //val ansiResetColor = "\u001B[0m"
     println("Current field: ")
     this.forEach { row ->
         row.forEach { cell ->
             cell.apply {
                 when (state) {
                     GameData.GameCellState.CROSS -> {
-                        print("$ansiRed$state $ansiResetColor")
+                        Log.i(TAG, "$state ")
                     }
                     GameData.GameCellState.CIRCLE -> {
-                        print("$ansiGreen$state $ansiResetColor")
+                        Log.i(TAG, "$state ")
                     }
                     else -> {
-                        print("$state ")
+                        Log.i(TAG, "$state ")
                     }
                 }
             }
         }
-        println()
+        Log.i(TAG, "...")
     }
 }
 

@@ -5,9 +5,13 @@ import androidx.lifecycle.ViewModel
 import com.example.mvvm_practice.extras.Grid
 import com.example.mvvm_practice.gameCore.Game
 import com.example.mvvm_practice.gameCore.GameData
+import com.example.mvvm_practice.gameCore.bot.GameBot
+import com.example.mvvm_practice.gameCore.bot.GameBotData
 
 class GameViewModel : ViewModel() {
     private val game = Game()
+
+    val gameBot = GameBot(game, GameBotData.Mode.HARD, GameData.Player.O)
 
     val field: LiveData<Grid> = game.field
 

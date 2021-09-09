@@ -1,19 +1,17 @@
 package com.example.mvvm_practice.gameCore.bot
 
-import com.example.mvvm_practice.gameCore.bot.GameBotData.Mode
-import com.example.mvvm_practice.gameCore.GameData
+import android.util.Log
+import com.example.mvvm_practice.extras.TAG
+import com.example.mvvm_practice.extras.contains
+import com.example.mvvm_practice.extras.containsStartAt
+import com.example.mvvm_practice.extras.print
+import com.example.mvvm_practice.gameCore.Game
+import com.example.mvvm_practice.gameCore.GameData.*
 import com.example.mvvm_practice.gameCore.GameData.Companion.gameModeToInt
 import com.example.mvvm_practice.gameCore.GameData.Companion.playerToCellState
 import com.example.mvvm_practice.gameCore.GameData.Companion.positionIntoIndex
 import com.example.mvvm_practice.gameCore.GameData.Companion.switchPlayer
-import com.example.mvvm_practice.gameCore.GameData.GameCellState
-import com.example.mvvm_practice.gameCore.GameData.GameCell
-import com.example.mvvm_practice.gameCore.GameData.GameMode
-import com.example.mvvm_practice.gameCore.GameData.Player
-import com.example.mvvm_practice.extras.contains
-import com.example.mvvm_practice.extras.containsStartAt
-import com.example.mvvm_practice.gameCore.Game
-import com.example.mvvm_practice.extras.print
+import com.example.mvvm_practice.gameCore.bot.GameBotData.Mode
 
 class GameBot(
     private val game: Game,
@@ -21,20 +19,20 @@ class GameBot(
     private var botPlayer: Player
 ) {
     fun makeMove(): Boolean {
-        if (game.currentPlayer.value == botPlayer && game.state.value == GameData.GameState.GAME) {
+        if (game.currentPlayer.value == botPlayer && game.state.value == GameState.GAME) {
             game.makeTurn(getIndexToMoveOrNull() ?: -1)
-            game.field.value?.print()
+            //game.field.value?.print()
             return true
         }
         return false
     }
 
     fun getIndexToMoveOrNull(): Int? {
-        val field = game.field.value!!
+        val field = game.field.value ?: Companion.standard_game_field
         val state = game.state.value
-        var indexToMove: Int? = null
+        var indexToMove: Int? = 55
         //Checking all conditions only if game is play
-        if (state == GameData.GameState.GAME) {
+        if (state == GameState.GAME) {
             when (mode) {
                 Mode.EASY -> {
                     //Move to closest empty cell
@@ -52,25 +50,41 @@ class GameBot(
                         //Move to closest empty cell
                         indexToMove = closestEmptyMoveIndexOrNull() ?: indexToMove
                         //Move to closest empty corner if player have center
+                        //Log.i(TAG, "getIndexToMoveOrNull: $indexToMove")
                         indexToMove = getClosestEmptyCornerOrNull() ?: indexToMove
                         //Check player move to center
+                        Log.i(TAG, "getIndexToMoveOrNull: $indexToMove")
                         indexToMove = getIndexToPreventPlayerWinOrNull() ?: indexToMove
                         //Check player win
-                        indexToMove = getIndexToWinOrNull(switchPlayer(botPlayer)) ?: indexToMove
+                        Log.i(TAG, "getIndexToMoveOrNull: $indexToMove")
+                        indexToMove = if(checkIsEmpty(getIndexToWinOrNull(switchPlayer(botPlayer)))) getIndexToWinOrNull(switchPlayer(botPlayer)) else indexToMove
+                        //TODO CHECK ISEMPTY
                         //Check center
+                        Log.i(TAG, "getIndexToMoveOrNull: $indexToMove center: ${field[1][1].state}")
 
                         //if (game.getMode() == GameMode.THREE_TO_THREE) {
-                            if (field[1][1].state == GameCellState.EMPTY) indexToMove =
-                                positionIntoIndex(1 to 1, field.size)
+                        if (field[1][1].state == GameCellState.EMPTY) {
+                            indexToMove = positionIntoIndex(1 to 1, field.size)
+                        }
                         //}
 
                         //Check bot win
-                        indexToMove = getIndexToWinOrNull(botPlayer) ?: indexToMove
+                        indexToMove = if(checkIsEmpty(getIndexToWinOrNull(botPlayer))) getIndexToWinOrNull(botPlayer) else indexToMove
+
+                        Log.i(TAG, "getIndexToMoveOrNull: $indexToMove")
                     }
                 }
             }
         }
+        Log.i(TAG, "getIndexToMoveOrNull: $indexToMove")
         return indexToMove
+    }
+
+    fun checkIsEmpty(cellIndex: Int?): Boolean {
+        if (cellIndex == null) return false
+        val (row, column) = Companion.indexIntoPosition(cellIndex, 3)
+        if (game.field.value?.get(row)?.get(column)?.state == GameCellState.EMPTY) return true
+        return false
     }
 
     //TODO
@@ -81,10 +95,22 @@ class GameBot(
         val field = game.field.value!!
         for (row in field.indices) {
             for (column in field[row].indices) {
-                if (field[row][column].state == GameCellState.EMPTY) return positionIntoIndex(row to column, field.size)
+                if (field[row][column].state == GameCellState.EMPTY) {
+                    Log.e(
+                        TAG,
+                        "closestEmptyMoveIndexOrNull: ${
+                            positionIntoIndex(
+                                row to column,
+                                field.size
+                            )
+                        }"
+                    )
+                    return positionIntoIndex(row to column, field.size)
+                }
             }
         }
-        return null //If no empty cells
+        return 55
+        //return null //If no empty cells
     }
 
     private fun getClosestEmptyCornerOrNull(): Int? {
@@ -125,11 +151,14 @@ class GameBot(
         return null
     }
 
-    //TODO
-    //TODO
-    //TODO
+//TODO
+//TODO
+//TODO
 
-    private fun generateWinRows(checkSize: Int, cellStateToCheck: GameCellState): Array<Array<GameCell>> {
+    private fun generateWinRows(
+        checkSize: Int,
+        cellStateToCheck: GameCellState
+    ): Array<Array<GameCell>> {
         var winRows: Array<Array<GameCell>> = arrayOf()
         for (i in 0 until checkSize) {
             winRows = winRows.plusElement(
@@ -142,12 +171,13 @@ class GameBot(
                 }
             )
         }
+        Log.e(TAG, "generateWinRows: ${winRows.print()}")
         return winRows
     }
 
-    //TODO
-    //TODO scalability,
-    // MANY DIAGS CHECK, IF THERE IS MORE THAN 2 DIAGONALS
+//TODO
+//TODO scalability,
+// MANY DIAGS CHECK, IF THERE IS MORE THAN 2 DIAGONALS
 
     private fun getIndexToWinOrNull(playerToCheck: Player): Int? {
         val field = game.field.value!!
@@ -189,7 +219,7 @@ class GameBot(
             //second
             if (secondDiag.contains(winRows[winRowIndex])) {
                 val winPosition = secondDiag.containsStartAt(winRows[winRowIndex])!! + winRowIndex
-                return positionIntoIndex(winPosition to winPosition, field.size)
+                return positionIntoIndex(2 - winPosition to winRowIndex, field.size)
             }
         }
         return null
